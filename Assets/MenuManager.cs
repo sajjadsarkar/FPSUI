@@ -25,6 +25,7 @@ public class MenuManager : MonoBehaviour
     public GameObject bottompanel2;
     void Start()
     {
+        Application.targetFrameRate = Screen.currentResolution.refreshRate;
         panel1Rect = panel1.GetComponent<RectTransform>();
         panel2Rect = panel2.GetComponent<RectTransform>();
         panel3Rect = panel3.GetComponent<RectTransform>();
