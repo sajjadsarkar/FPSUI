@@ -27824,7 +27824,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Shop
+  m_text: Friends
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 86fe944d638959d41977e95ab9f2aaa9, type: 2}
   m_sharedMaterial: {fileID: 2907172143211258326, guid: 86fe944d638959d41977e95ab9f2aaa9, type: 2}
