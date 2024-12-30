@@ -63,7 +63,7 @@ public class MenuManager : MonoBehaviour
     {
         player.SetActive(false);
 
-        Invoke("ShowPlayer", 0.5f);
+        Invoke("ShowPlayer", 0.3f);
         int previousPanel = currentPanelIndex;
         bottompanel2.SetActive(false);
         foreach (var particle in particleEffects)
@@ -107,7 +107,7 @@ public class MenuManager : MonoBehaviour
     public void ShowPanel2()
     {
         player.SetActive(false);
-        Invoke("ShowPlayer", 0.5f);
+        Invoke("ShowPlayer", 0.3f);
         bottompanel2.SetActive(true);
         foreach (var particle in particleEffects)
         {
@@ -218,7 +218,8 @@ public class MenuManager : MonoBehaviour
 
     public void ShowPanel7()
     {
-        Invoke("ShowPlayer", 0.5f);
+        player.SetActive(false);
+        Invoke("ShowPlayer", 0.3f);
         HideAllPanels();
         panel7.SetActive(true);
         panel7Rect.anchoredPosition = new Vector2(slideDistance, 0);
