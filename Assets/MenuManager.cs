@@ -55,6 +55,7 @@ public class MenuManager : MonoBehaviour
 
     public void ShowPanel1()
     {
+        int previousPanel = currentPanelIndex;
         bottompanel2.SetActive(false);
         foreach (var particle in particleEffects)
         {
@@ -62,13 +63,36 @@ public class MenuManager : MonoBehaviour
         }
         panel1.SetActive(true);
         BottomPanel.SetActive(true);
+        panel1Rect.anchoredPosition = new Vector2(-slideDistance, 0);
         panel1Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
-
-        if (currentPanelIndex == 2)
+        switch (previousPanel)
         {
-            panel2Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel2.SetActive(false));
+            case 2:
+                panel2Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
+                    .OnComplete(() => panel2.SetActive(false));
+                break;
+            case 3:
+                panel3Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
+                    .OnComplete(() => panel3.SetActive(false));
+                break;
+            case 4:
+                panel4Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
+                    .OnComplete(() => panel4.SetActive(false));
+                break;
+            case 5:
+                panel5Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
+                    .OnComplete(() => panel5.SetActive(false));
+                break;
+            case 6:
+                panel6Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
+                    .OnComplete(() => panel6.SetActive(false));
+                break;
+            case 7:
+                panel7Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
+                    .OnComplete(() => panel7.SetActive(false));
+                break;
         }
+
         currentPanelIndex = 1;
     }
 
@@ -198,16 +222,10 @@ public class MenuManager : MonoBehaviour
         switch (currentPanelIndex)
         {
             case 7:
-                ShowPanel6();
-                break;
             case 6:
-                ShowPanel5();
-                break;
             case 5:
-                ShowPanel4();
-                break;
             case 4:
-                ShowPanel3();
+                ShowPanel1();
                 break;
             case 3:
                 ShowPanel2();
