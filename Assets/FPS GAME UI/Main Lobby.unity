@@ -21188,6 +21188,7 @@ MonoBehaviour:
   - {fileID: 1082777492}
   - {fileID: 1167434351}
   bottompanel2: {fileID: 1860550171}
+  player: {fileID: 1836392723}
 --- !u!4 &664356795
 Transform:
   m_ObjectHideFlags: 0
