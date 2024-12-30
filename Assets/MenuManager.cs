@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class MenuManager : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private List<GameObject> particleEffects;
     public GameObject bottompanel2;
 
+    public GameObject player;
+
     void Start()
     {
         Application.targetFrameRate = Screen.currentResolution.refreshRate;
@@ -42,7 +45,10 @@ public class MenuManager : MonoBehaviour
         panel7Rect = panel7.GetComponent<RectTransform>();
         ShowPanel1();
     }
-
+    private void ShowPlayer()
+    {
+        player.SetActive(true);
+    }
     private void HideAllPanels()
     {
         foreach (var particle in particleEffects)
@@ -55,6 +61,9 @@ public class MenuManager : MonoBehaviour
 
     public void ShowPanel1()
     {
+        player.SetActive(false);
+
+        Invoke("ShowPlayer", 0.5f);
         int previousPanel = currentPanelIndex;
         bottompanel2.SetActive(false);
         foreach (var particle in particleEffects)
@@ -63,7 +72,6 @@ public class MenuManager : MonoBehaviour
         }
         panel1.SetActive(true);
         BottomPanel.SetActive(true);
-        panel1Rect.anchoredPosition = new Vector2(-slideDistance, 0);
         panel1Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
         switch (previousPanel)
         {
@@ -98,6 +106,8 @@ public class MenuManager : MonoBehaviour
 
     public void ShowPanel2()
     {
+        player.SetActive(false);
+        Invoke("ShowPlayer", 0.5f);
         bottompanel2.SetActive(true);
         foreach (var particle in particleEffects)
         {
@@ -124,6 +134,7 @@ public class MenuManager : MonoBehaviour
 
     public void ShowPanel3()
     {
+        player.SetActive(false);
         HideAllPanels();
         panel3.SetActive(true);
         panel3Rect.anchoredPosition = new Vector2(slideDistance, 0);
@@ -144,6 +155,7 @@ public class MenuManager : MonoBehaviour
 
     public void ShowPanel4()
     {
+        player.SetActive(false);
         HideAllPanels();
         panel4.SetActive(true);
         panel4Rect.anchoredPosition = new Vector2(slideDistance, 0);
@@ -164,6 +176,7 @@ public class MenuManager : MonoBehaviour
 
     public void ShowPanel5()
     {
+        player.SetActive(false);
         HideAllPanels();
         panel5.SetActive(true);
         panel5Rect.anchoredPosition = new Vector2(slideDistance, 0);
@@ -184,6 +197,7 @@ public class MenuManager : MonoBehaviour
 
     public void ShowPanel6()
     {
+        player.SetActive(false);
         HideAllPanels();
         panel6.SetActive(true);
         panel6Rect.anchoredPosition = new Vector2(slideDistance, 0);
@@ -204,6 +218,7 @@ public class MenuManager : MonoBehaviour
 
     public void ShowPanel7()
     {
+        Invoke("ShowPlayer", 0.5f);
         HideAllPanels();
         panel7.SetActive(true);
         panel7Rect.anchoredPosition = new Vector2(slideDistance, 0);
