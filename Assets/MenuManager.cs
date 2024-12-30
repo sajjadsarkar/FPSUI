@@ -12,7 +12,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject panel5;
     [SerializeField] private GameObject panel6;
     [SerializeField] private GameObject panel7;
-
+    [SerializeField] private GameObject panel8;
     [SerializeField] private GameObject BottomPanel;
     [SerializeField] private float transitionDuration = 0.5f;
     [SerializeField] private Ease easeType = Ease.OutQuint;
@@ -25,12 +25,12 @@ public class MenuManager : MonoBehaviour
     private RectTransform panel5Rect;
     private RectTransform panel6Rect;
     private RectTransform panel7Rect;
+    private RectTransform panel8Rect;
 
     private float slideDistance = 1000f;
 
     [SerializeField] private List<GameObject> particleEffects;
     public GameObject bottompanel2;
-
     public GameObject player;
 
     void Start()
@@ -43,12 +43,15 @@ public class MenuManager : MonoBehaviour
         panel5Rect = panel5.GetComponent<RectTransform>();
         panel6Rect = panel6.GetComponent<RectTransform>();
         panel7Rect = panel7.GetComponent<RectTransform>();
+        panel8Rect = panel8.GetComponent<RectTransform>();
         ShowPanel1();
     }
+
     private void ShowPlayer()
     {
         player.SetActive(true);
     }
+
     private void HideAllPanels()
     {
         foreach (var particle in particleEffects)
@@ -62,45 +65,17 @@ public class MenuManager : MonoBehaviour
     public void ShowPanel1()
     {
         player.SetActive(false);
-
         Invoke("ShowPlayer", 0.3f);
-        int previousPanel = currentPanelIndex;
-        bottompanel2.SetActive(false);
-        foreach (var particle in particleEffects)
-        {
-            particle.SetActive(true);
-        }
+        HideAllPanels();
         panel1.SetActive(true);
-        BottomPanel.SetActive(true);
+        panel1Rect.anchoredPosition = new Vector2(slideDistance, 0);
         panel1Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
-        switch (previousPanel)
-        {
-            case 2:
-                panel2Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel2.SetActive(false));
-                break;
-            case 3:
-                panel3Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel3.SetActive(false));
-                break;
-            case 4:
-                panel4Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel4.SetActive(false));
-                break;
-            case 5:
-                panel5Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel5.SetActive(false));
-                break;
-            case 6:
-                panel6Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel6.SetActive(false));
-                break;
-            case 7:
-                panel7Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel7.SetActive(false));
-                break;
-        }
 
+        if (currentPanelIndex == 2)
+        {
+            panel2Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
+                .OnComplete(() => panel2.SetActive(false));
+        }
         currentPanelIndex = 1;
     }
 
@@ -108,24 +83,18 @@ public class MenuManager : MonoBehaviour
     {
         player.SetActive(false);
         Invoke("ShowPlayer", 0.3f);
-        bottompanel2.SetActive(true);
-        foreach (var particle in particleEffects)
-        {
-            particle.SetActive(false);
-        }
+        HideAllPanels();
         panel2.SetActive(true);
-        BottomPanel.SetActive(false);
+        panel2Rect.anchoredPosition = new Vector2(slideDistance, 0);
+        panel2Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
+
         if (currentPanelIndex == 1)
         {
-            panel2Rect.anchoredPosition = new Vector2(slideDistance, 0);
-            panel2Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
             panel1Rect.DOAnchorPos(new Vector2(-slideDistance, 0), transitionDuration).SetEase(easeType)
                 .OnComplete(() => panel1.SetActive(false));
         }
         else if (currentPanelIndex == 3)
         {
-            panel2Rect.anchoredPosition = new Vector2(-slideDistance, 0);
-            panel2Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
             panel3Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
                 .OnComplete(() => panel3.SetActive(false));
         }
@@ -135,6 +104,7 @@ public class MenuManager : MonoBehaviour
     public void ShowPanel3()
     {
         player.SetActive(false);
+        Invoke("ShowPlayer", 0.3f);
         HideAllPanels();
         panel3.SetActive(true);
         panel3Rect.anchoredPosition = new Vector2(slideDistance, 0);
@@ -156,6 +126,7 @@ public class MenuManager : MonoBehaviour
     public void ShowPanel4()
     {
         player.SetActive(false);
+        Invoke("ShowPlayer", 0.3f);
         HideAllPanels();
         panel4.SetActive(true);
         panel4Rect.anchoredPosition = new Vector2(slideDistance, 0);
@@ -177,6 +148,7 @@ public class MenuManager : MonoBehaviour
     public void ShowPanel5()
     {
         player.SetActive(false);
+        Invoke("ShowPlayer", 0.3f);
         HideAllPanels();
         panel5.SetActive(true);
         panel5Rect.anchoredPosition = new Vector2(slideDistance, 0);
@@ -198,6 +170,7 @@ public class MenuManager : MonoBehaviour
     public void ShowPanel6()
     {
         player.SetActive(false);
+        Invoke("ShowPlayer", 0.3f);
         HideAllPanels();
         panel6.SetActive(true);
         panel6Rect.anchoredPosition = new Vector2(slideDistance, 0);
@@ -230,13 +203,36 @@ public class MenuManager : MonoBehaviour
             panel6Rect.DOAnchorPos(new Vector2(-slideDistance, 0), transitionDuration).SetEase(easeType)
                 .OnComplete(() => panel6.SetActive(false));
         }
+        else if (currentPanelIndex == 8)
+        {
+            panel8Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
+                .OnComplete(() => panel8.SetActive(false));
+        }
         currentPanelIndex = 7;
+    }
+
+    public void ShowPanel8()
+    {
+        player.SetActive(false);
+        Invoke("ShowPlayer", 0.3f);
+        HideAllPanels();
+        panel8.SetActive(true);
+        panel8Rect.anchoredPosition = new Vector2(slideDistance, 0);
+        panel8Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
+
+        if (currentPanelIndex == 7)
+        {
+            panel7Rect.DOAnchorPos(new Vector2(-slideDistance, 0), transitionDuration).SetEase(easeType)
+                .OnComplete(() => panel7.SetActive(false));
+        }
+        currentPanelIndex = 8;
     }
 
     public void GoBack()
     {
         switch (currentPanelIndex)
         {
+            case 8:
             case 7:
             case 6:
             case 5:
