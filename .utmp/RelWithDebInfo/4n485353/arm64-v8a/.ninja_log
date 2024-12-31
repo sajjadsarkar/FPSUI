@@ -1,10 +1,19 @@
 # ninja log v5
-13	2363	7569283123779258	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	34a1b9f2f297c744
-82	2473	7569283124730789	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	c6775cf17f43b8fb
 118	2618	7569283126487762	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	c24edda5cde901a4
+13	2363	7569283123779258	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	34a1b9f2f297c744
+24	3694	7569283138121064	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	91f6983879f5c473
+82	2473	7569283124730789	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	c6775cf17f43b8fb
 35	2780	7569283129109078	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	5a73a3974bdbe936
 98	3404	7569283134393365	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	7b31d123fa7c6c67
 48	3494	7569283136091009	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	29053e98e8a85b4
-24	3694	7569283138121064	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	91f6983879f5c473
-1	4264	7569283143871180	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	8e4691b27fa0ffae
 4264	4656	7569283147924993	D:/Unity Projects/FPSUI/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4n485353/obj/arm64-v8a/libgame.so	9ad61617e3d234c9
+1	4264	7569283143871180	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	8e4691b27fa0ffae
+1745	5491	7573564201903159	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	7b31d123fa7c6c67
+1737	5589	7573564202897191	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	c6775cf17f43b8fb
+1724	5665	7573564203012905	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	34a1b9f2f297c744
+1759	5790	7573564204745905	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	c24edda5cde901a4
+1730	5796	7573564205117948	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	29053e98e8a85b4
+6	6076	7573564207411815	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	91f6983879f5c473
+1752	6308	7573564210349624	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	5a73a3974bdbe936
+1717	6544	7573564212140759	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	8e4691b27fa0ffae
+6545	8232	7573564229748206	D:/Unity Projects/FPSUI/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/4n485353/obj/arm64-v8a/libgame.so	9ad61617e3d234c9
