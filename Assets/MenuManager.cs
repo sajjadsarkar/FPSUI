@@ -12,123 +12,124 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject panel5;
     [SerializeField] private GameObject panel6;
     [SerializeField] private GameObject panel7;
-
     [SerializeField] private GameObject BottomPanel;
-    [SerializeField] private float transitionDuration = 0.5f;
+    [SerializeField] private float transitionDuration = 0.3f;
     [SerializeField] private Ease easeType = Ease.OutQuint;
-
-    private int currentPanelIndex = 1;
-    private RectTransform panel1Rect;
-    private RectTransform panel2Rect;
-    private RectTransform panel3Rect;
-    private RectTransform panel4Rect;
-    private RectTransform panel5Rect;
-    private RectTransform panel6Rect;
-    private RectTransform panel7Rect;
-
-    private float slideDistance = 1000f;
-
     [SerializeField] private List<GameObject> particleEffects;
     public GameObject bottompanel2;
-
     public GameObject player;
+
+    private int currentPanelIndex = 1;
+    private RectTransform panel1Rect, panel2Rect, panel3Rect, panel4Rect,
+                         panel5Rect, panel6Rect, panel7Rect;
+    private CanvasGroup panel1Group, panel2Group, panel3Group, panel4Group,
+                       panel5Group, panel6Group, panel7Group;
+    private float slideDistance = 1000f;
+    private float fadeDuration = 0.15f;
 
     void Start()
     {
         Application.targetFrameRate = Screen.currentResolution.refreshRate;
-        panel1Rect = panel1.GetComponent<RectTransform>();
-        panel2Rect = panel2.GetComponent<RectTransform>();
-        panel3Rect = panel3.GetComponent<RectTransform>();
-        panel4Rect = panel4.GetComponent<RectTransform>();
-        panel5Rect = panel5.GetComponent<RectTransform>();
-        panel6Rect = panel6.GetComponent<RectTransform>();
-        panel7Rect = panel7.GetComponent<RectTransform>();
+        InitializePanels();
         ShowPanel1();
     }
+
+    private void InitializePanels()
+    {
+        // Initialize RectTransforms
+        panel1Rect = GetOrAddComponent<RectTransform>(panel1);
+        panel2Rect = GetOrAddComponent<RectTransform>(panel2);
+        panel3Rect = GetOrAddComponent<RectTransform>(panel3);
+        panel4Rect = GetOrAddComponent<RectTransform>(panel4);
+        panel5Rect = GetOrAddComponent<RectTransform>(panel5);
+        panel6Rect = GetOrAddComponent<RectTransform>(panel6);
+        panel7Rect = GetOrAddComponent<RectTransform>(panel7);
+
+        // Initialize CanvasGroups
+        panel1Group = GetOrAddComponent<CanvasGroup>(panel1);
+        panel2Group = GetOrAddComponent<CanvasGroup>(panel2);
+        panel3Group = GetOrAddComponent<CanvasGroup>(panel3);
+        panel4Group = GetOrAddComponent<CanvasGroup>(panel4);
+        panel5Group = GetOrAddComponent<CanvasGroup>(panel5);
+        panel6Group = GetOrAddComponent<CanvasGroup>(panel6);
+        panel7Group = GetOrAddComponent<CanvasGroup>(panel7);
+    }
+
+    private T GetOrAddComponent<T>(GameObject obj) where T : Component
+    {
+        T component = obj.GetComponent<T>();
+        if (component == null)
+            component = obj.AddComponent<T>();
+        return component;
+    }
+
     private void ShowPlayer()
     {
         player.SetActive(true);
     }
+
     private void HideAllPanels()
     {
         foreach (var particle in particleEffects)
-        {
             particle.SetActive(false);
-        }
         BottomPanel.SetActive(false);
         bottompanel2.SetActive(false);
+    }
+
+    private void AnimatePanel(GameObject inPanel, GameObject outPanel, bool slideFromRight)
+    {
+        // Get components
+        var inRect = inPanel.GetComponent<RectTransform>();
+        var outRect = outPanel.GetComponent<RectTransform>();
+        var inGroup = inPanel.GetComponent<CanvasGroup>();
+        var outGroup = outPanel.GetComponent<CanvasGroup>();
+
+        // Setup initial state
+        inPanel.SetActive(true);
+        float startX = slideFromRight ? slideDistance : -slideDistance;
+        inRect.anchoredPosition = new Vector2(startX, 0);
+        inGroup.alpha = 0;
+
+        // Create animation sequence
+        Sequence sequence = DOTween.Sequence();
+
+        // Animate in panel
+        sequence.Append(inRect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType));
+        sequence.Join(inGroup.DOFade(1, fadeDuration));
+
+        // Animate out panel
+        float targetX = slideFromRight ? -slideDistance : slideDistance;
+        sequence.Join(outRect.DOAnchorPos(new Vector2(targetX, 0), transitionDuration).SetEase(easeType));
+        sequence.Join(outGroup.DOFade(0, fadeDuration / 2).OnComplete(() => outPanel.SetActive(false)));
     }
 
     public void ShowPanel1()
     {
         player.SetActive(false);
+        Invoke("ShowPlayer", 0.2f);
 
-        Invoke("ShowPlayer", 0.3f);
-        int previousPanel = currentPanelIndex;
         bottompanel2.SetActive(false);
         foreach (var particle in particleEffects)
-        {
             particle.SetActive(true);
-        }
-        panel1.SetActive(true);
-        BottomPanel.SetActive(true);
-        panel1Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
-        switch (previousPanel)
-        {
-            case 2:
-                panel2Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel2.SetActive(false));
-                break;
-            case 3:
-                panel3Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel3.SetActive(false));
-                break;
-            case 4:
-                panel4Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel4.SetActive(false));
-                break;
-            case 5:
-                panel5Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel5.SetActive(false));
-                break;
-            case 6:
-                panel6Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel6.SetActive(false));
-                break;
-            case 7:
-                panel7Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                    .OnComplete(() => panel7.SetActive(false));
-                break;
-        }
 
+        BottomPanel.SetActive(true);
+
+        if (currentPanelIndex != 1)
+        {
+            AnimatePanel(panel1, GetCurrentPanel(), false);
+        }
         currentPanelIndex = 1;
     }
 
     public void ShowPanel2()
     {
         player.SetActive(false);
-        Invoke("ShowPlayer", 0.3f);
+        Invoke("ShowPlayer", 0.2f);
+
+        HideAllPanels();
         bottompanel2.SetActive(true);
-        foreach (var particle in particleEffects)
-        {
-            particle.SetActive(false);
-        }
-        panel2.SetActive(true);
-        BottomPanel.SetActive(false);
-        if (currentPanelIndex == 1)
-        {
-            panel2Rect.anchoredPosition = new Vector2(slideDistance, 0);
-            panel2Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
-            panel1Rect.DOAnchorPos(new Vector2(-slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel1.SetActive(false));
-        }
-        else if (currentPanelIndex == 3)
-        {
-            panel2Rect.anchoredPosition = new Vector2(-slideDistance, 0);
-            panel2Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
-            panel3Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel3.SetActive(false));
-        }
+
+        AnimatePanel(panel2, GetCurrentPanel(), currentPanelIndex < 2);
         currentPanelIndex = 2;
     }
 
@@ -136,20 +137,8 @@ public class MenuManager : MonoBehaviour
     {
         player.SetActive(false);
         HideAllPanels();
-        panel3.SetActive(true);
-        panel3Rect.anchoredPosition = new Vector2(slideDistance, 0);
-        panel3Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
 
-        if (currentPanelIndex == 2)
-        {
-            panel2Rect.DOAnchorPos(new Vector2(-slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel2.SetActive(false));
-        }
-        else if (currentPanelIndex == 4)
-        {
-            panel4Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel4.SetActive(false));
-        }
+        AnimatePanel(panel3, GetCurrentPanel(), currentPanelIndex < 3);
         currentPanelIndex = 3;
     }
 
@@ -157,20 +146,8 @@ public class MenuManager : MonoBehaviour
     {
         player.SetActive(false);
         HideAllPanels();
-        panel4.SetActive(true);
-        panel4Rect.anchoredPosition = new Vector2(slideDistance, 0);
-        panel4Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
 
-        if (currentPanelIndex == 3)
-        {
-            panel3Rect.DOAnchorPos(new Vector2(-slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel3.SetActive(false));
-        }
-        else if (currentPanelIndex == 5)
-        {
-            panel5Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel5.SetActive(false));
-        }
+        AnimatePanel(panel4, GetCurrentPanel(), currentPanelIndex < 4);
         currentPanelIndex = 4;
     }
 
@@ -178,20 +155,8 @@ public class MenuManager : MonoBehaviour
     {
         player.SetActive(false);
         HideAllPanels();
-        panel5.SetActive(true);
-        panel5Rect.anchoredPosition = new Vector2(slideDistance, 0);
-        panel5Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
 
-        if (currentPanelIndex == 4)
-        {
-            panel4Rect.DOAnchorPos(new Vector2(-slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel4.SetActive(false));
-        }
-        else if (currentPanelIndex == 6)
-        {
-            panel6Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel6.SetActive(false));
-        }
+        AnimatePanel(panel5, GetCurrentPanel(), currentPanelIndex < 5);
         currentPanelIndex = 5;
     }
 
@@ -199,38 +164,34 @@ public class MenuManager : MonoBehaviour
     {
         player.SetActive(false);
         HideAllPanels();
-        panel6.SetActive(true);
-        panel6Rect.anchoredPosition = new Vector2(slideDistance, 0);
-        panel6Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
 
-        if (currentPanelIndex == 5)
-        {
-            panel5Rect.DOAnchorPos(new Vector2(-slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel5.SetActive(false));
-        }
-        else if (currentPanelIndex == 7)
-        {
-            panel7Rect.DOAnchorPos(new Vector2(slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel7.SetActive(false));
-        }
+        AnimatePanel(panel6, GetCurrentPanel(), currentPanelIndex < 6);
         currentPanelIndex = 6;
     }
 
     public void ShowPanel7()
     {
         player.SetActive(false);
-        Invoke("ShowPlayer", 0.3f);
+        Invoke("ShowPlayer", 0.2f);
         HideAllPanels();
-        panel7.SetActive(true);
-        panel7Rect.anchoredPosition = new Vector2(slideDistance, 0);
-        panel7Rect.DOAnchorPos(Vector2.zero, transitionDuration).SetEase(easeType);
 
-        if (currentPanelIndex == 6)
-        {
-            panel6Rect.DOAnchorPos(new Vector2(-slideDistance, 0), transitionDuration).SetEase(easeType)
-                .OnComplete(() => panel6.SetActive(false));
-        }
+        AnimatePanel(panel7, GetCurrentPanel(), currentPanelIndex < 7);
         currentPanelIndex = 7;
+    }
+
+    private GameObject GetCurrentPanel()
+    {
+        switch (currentPanelIndex)
+        {
+            case 1: return panel1;
+            case 2: return panel2;
+            case 3: return panel3;
+            case 4: return panel4;
+            case 5: return panel5;
+            case 6: return panel6;
+            case 7: return panel7;
+            default: return panel1;
+        }
     }
 
     public void GoBack()
