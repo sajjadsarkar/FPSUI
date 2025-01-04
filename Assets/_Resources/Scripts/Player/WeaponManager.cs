@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public class WeaponManager : MonoBehaviour 
+public class WeaponManager : MonoBehaviour
 {
     private GameObject[] weaponsInUse = new GameObject[2];
     public GameObject[] weaponsInGame;
@@ -17,13 +17,13 @@ public class WeaponManager : MonoBehaviour
 
     private float switchWeaponTime = 0.25f;
     public bool canSwitch = true;
-	private bool equipped = false;
+    private bool equipped = false;
     [HideInInspector] public bool showWepGui = false;
     [HideInInspector] public bool showAmmoGui = false;
     [HideInInspector] public int weaponToSelect;
     [HideInInspector] public int setElement;
     [HideInInspector] public int weaponToDrop;
-	[HideInInspector] public float crosshairSize;
+    [HideInInspector] public float crosshairSize;
 
     public AudioClip pickupSound;
     public AudioSource aSource;
@@ -34,13 +34,13 @@ public class WeaponManager : MonoBehaviour
     private string wrongType = "Select appropriate weapon to pick up";
     public int selectWepSlot1 = 0;
     public int selectWepSlot2 = 0;
-	Text noteUI;
-	
+    Text noteUI;
+
     void Start()
     {
-		noteUI = CanvasManager.instance.note;
-		CanvasManager.instance.SetWeapon(this);
-		
+        noteUI = CanvasManager.instance.note;
+        CanvasManager.instance.SetWeapon(this);
+
         for (int h = 0; h < worldModels.Length; h++)
         {
             weaponsInGame[h].SetActive(false);
@@ -52,9 +52,10 @@ public class WeaponManager : MonoBehaviour
         weaponToSelect = 0;
         StartCoroutine(DeselectWeapon());
     }
-	
-    void Update() {
-	
+
+    void Update()
+    {
+
         if (Cursor.lockState == CursorLockMode.None) return;
 
         if (Input.GetKeyDown("1") && weaponsInUse.Length >= 1 && canSwitch && weaponToSelect != 0)
@@ -94,22 +95,22 @@ public class WeaponManager : MonoBehaviour
         {
             WeaponIndex pre = hit.transform.GetComponent<WeaponIndex>();
             setElement = pre.setWeapon;
-			
-			if(!showWepGui)
-			{			
-				if (weaponsInUse[0] != weaponsInGame[setElement] && weaponsInUse[1] != weaponsInGame[setElement])
-				{
-					equipped = false;
-					noteUI.text = "Press key <color=#88FF6AFF> << E >> </color> to pickup weapon";
-				}
-				else
-				{
-					equipped = true;
-					noteUI.text = "Weapon is already equipped";
-				}
-				showWepGui = true;
-			}
-			
+
+            if (!showWepGui)
+            {
+                if (weaponsInUse[0] != weaponsInGame[setElement] && weaponsInUse[1] != weaponsInGame[setElement])
+                {
+                    equipped = false;
+                    noteUI.text = "Press key <color=#88FF6AFF> << E >> </color> to pickup weapon";
+                }
+                else
+                {
+                    equipped = true;
+                    noteUI.text = "Weapon is already equipped";
+                }
+                showWepGui = true;
+            }
+
             if (canSwitch && !equipped)
             {
                 if (Input.GetKeyDown("e"))
@@ -123,11 +124,11 @@ public class WeaponManager : MonoBehaviour
         }
         else
         {
-			if(showWepGui)
-			{	
-				noteUI.text = "";
-				showWepGui = false;
-			}
+            if (showWepGui)
+            {
+                noteUI.text = "";
+                showWepGui = false;
+            }
         }
 
         if (Physics.Raycast(pos, dir, out hit, dis, layerMaskAmmo))
@@ -156,8 +157,8 @@ public class WeaponManager : MonoBehaviour
                             else
                                 mags.magazines += pickupGO.amount * mags.bulletsPerMag;
 
-							CanvasManager.instance.UpdateMags(mags.magazines);
-							aSource.PlayOneShot(pickupSound, 0.3f);
+                            CanvasManager.instance.UpdateMags(mags.magazines);
+                            aSource.PlayOneShot(pickupSound, 0.3f);
                             Destroy(hit.transform.gameObject);
                         }
                     }
@@ -184,7 +185,7 @@ public class WeaponManager : MonoBehaviour
                         if (Input.GetKeyDown("e"))
                         {
                             projectile.projectiles += pickupGO.amount;
-							CanvasManager.instance.UpdateProjectileUI(projectile.projectiles); 
+                            CanvasManager.instance.UpdateProjectileUI(projectile.projectiles);
                             aSource.PlayOneShot(pickupSound, 0.3f);
                             Destroy(hit.transform.gameObject);
                         }
@@ -209,20 +210,20 @@ public class WeaponManager : MonoBehaviour
                     }
                 }
             }
-			
-			if(!showAmmoGui)
-			{
-				noteUI.text = notes + "\n" + textFromPickupScript;
-				showAmmoGui = true;
-			}	
+
+            if (!showAmmoGui)
+            {
+                noteUI.text = notes + "\n" + textFromPickupScript;
+                showAmmoGui = true;
+            }
         }
         else
         {
-			if(showAmmoGui)
-			{	
-				noteUI.text = "";
-				showAmmoGui = false;
-			}
+            if (showAmmoGui)
+            {
+                noteUI.text = "";
+                showAmmoGui = false;
+            }
         }
     }
 
@@ -232,8 +233,8 @@ public class WeaponManager : MonoBehaviour
 
         for (int i = 0; i < weaponsInUse.Length; i++)
         {
-			if(weaponsInUse[i].GetComponent<WeaponScriptNEW>() != null)
-				weaponsInUse[i].GetComponent<WeaponScriptNEW>().Deselect();
+            if (weaponsInUse[i].GetComponent<WeaponScriptNEW>() != null)
+                weaponsInUse[i].GetComponent<WeaponScriptNEW>().Deselect();
             weaponsInUse[i].gameObject.SetActive(false);
         }
 
@@ -242,7 +243,7 @@ public class WeaponManager : MonoBehaviour
         yield return new WaitForSeconds(switchWeaponTime);
         canSwitch = true;
     }
-	
+
     void SelectWeapon(int i)
     {
         weaponsInUse[i].gameObject.SetActive(true);
@@ -271,8 +272,8 @@ public class WeaponManager : MonoBehaviour
         canSwitch = false;
         for (int i = 0; i < weaponsInUse.Length; i++)
         {
-			if(weaponsInUse[i].GetComponent<WeaponScriptNEW>() != null)
-				weaponsInUse[i].GetComponent<WeaponScriptNEW>().Deselect();
+            if (weaponsInUse[i].GetComponent<WeaponScriptNEW>() != null)
+                weaponsInUse[i].GetComponent<WeaponScriptNEW>().Deselect();
             weaponsInUse[i].gameObject.SetActive(false);
         }
     }

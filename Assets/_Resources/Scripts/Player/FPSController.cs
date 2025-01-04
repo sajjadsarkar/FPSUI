@@ -20,16 +20,16 @@ public class FPSController : MonoBehaviour
     private float antiBumpFactor = .75f;
     private float antiBunnyHopFactor = 1f;
     public bool airControl = false;
-	public Transform cameraGO;
-	
+    public Transform cameraGO;
+
     [HideInInspector] public bool run;
     [HideInInspector] public bool canRun = true;
     [HideInInspector] Vector3 moveDirection = Vector3.zero;
-	[HideInInspector] public bool grounded = false;
+    [HideInInspector] public bool grounded = false;
     [HideInInspector] public float speed;
-	[HideInInspector] public AudioSource ambientSource;
-	
-	private Transform myTransform;
+    [HideInInspector] public AudioSource ambientSource;
+
+    private Transform myTransform;
     private RaycastHit hit;
     private float fallDistance;
     private bool falling = false;
@@ -41,9 +41,9 @@ public class FPSController : MonoBehaviour
     private float crouchHeight = 0.2f;
     private float proneHeight = -0.4f;
 
-	// 0 = standing 1 = crouching 2 = prone
+    // 0 = standing 1 = crouching 2 = prone
     [HideInInspector] public int state = 0;
-    
+
     private float adjustAnimSpeed = 7.0f;
 
     //Ladders
@@ -74,7 +74,7 @@ public class FPSController : MonoBehaviour
     public bool swimming = false;
     private float swimAccel;
     private float underWaterTimer = 0.0f;
-    public PostProcessingProfile profile; 
+    public PostProcessingProfile profile;
 
     private float waterLevel;
     private float underwaterLevel;
@@ -91,23 +91,27 @@ public class FPSController : MonoBehaviour
     public GameObject waterSplash;
     public ParticleSystem waterFoam;
     ParticleSystem emiter;
-	
+
+    private FixedJoystick moveJoystick;
     void Start()
     {
+        moveJoystick = GameObject.FindObjectOfType<FixedJoystick>();
+
+
         myTransform = transform;
         rayDistance = controller.height / 2 + 1.1f;
         slideLimit = controller.slopeLimit - .2f;
         walkRunAnim.wrapMode = WrapMode.Loop;
         walkRunAnim.Stop();
         cameraAnimations[runAnimation].speed = 0.8f;
-		profile.depthOfField.enabled = false;
+        profile.depthOfField.enabled = false;
     }
 
     void Update()
     {
         velMagnitude = controller.velocity.magnitude;
-        float inputX = Input.GetAxis("Horizontal");
-        float inputY = Input.GetAxis("Vertical");
+        float inputX = Input.GetAxis("Horizontal") + moveJoystick.Horizontal;
+        float inputY = Input.GetAxis("Vertical") + moveJoystick.Vertical;
         float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f) ? .7071f : 1.0f;
 
         if (onLadder)
@@ -180,7 +184,7 @@ public class FPSController : MonoBehaviour
                 {
                     if (state < 2) footsteps.JumpLand();
                     else if (bodyHitSound) aSource.PlayOneShot(bodyHitSound, 0.5f);
-	
+
                     StartCoroutine(FallCamera(new Vector3(7, Random.Range(-1.0f, 1.0f), 0), new Vector3(3, Random.Range(-0.5f, 0.5f), 0), 0.15f));
                 }
             }
@@ -189,7 +193,7 @@ public class FPSController : MonoBehaviour
             {
                 Vector3 hitNormal = hit.normal;
                 moveDirection = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
-                Vector3.OrthoNormalize( ref hitNormal, ref moveDirection);
+                Vector3.OrthoNormalize(ref hitNormal, ref moveDirection);
                 moveDirection *= slideSpeed;
             }
             else
@@ -218,14 +222,14 @@ public class FPSController : MonoBehaviour
                     speed = proneSpeed;
                     run = false;
                 }
-				
+
                 if (Cursor.lockState == CursorLockMode.Locked)
                     moveDirection = new Vector3(inputX * inputModifyFactor, -antiBumpFactor, inputY * inputModifyFactor);
                 else
                     moveDirection = new Vector3(0, -antiBumpFactor, 0);
 
-				moveDirection = myTransform.TransformDirection(moveDirection);
-				moveDirection *= speed;
+                moveDirection = myTransform.TransformDirection(moveDirection);
+                moveDirection *= speed;
 
                 if (!Input.GetButton("Jump"))
                 {
@@ -286,7 +290,7 @@ public class FPSController : MonoBehaviour
 
                     if (swimAccel <= 1.0f)
                     {
-                        StartCoroutine(FallCamera( new Vector3(7, Random.Range(-5.0f, 5.0f), 0), new Vector3(4, 0, 0), 0.15f));
+                        StartCoroutine(FallCamera(new Vector3(7, Random.Range(-5.0f, 5.0f), 0), new Vector3(4, 0, 0), 0.15f));
                         swimAccel = 6.0f;
                     }
 
@@ -306,7 +310,7 @@ public class FPSController : MonoBehaviour
 
                     if (underWaterTimer > 15.0f)
                     {
-                        StartCoroutine(FallCamera(new Vector3(Random.Range(-2.0f, 5.0f), Random.Range(-7.0f, 7.0f), 0),new Vector3(4, Random.Range(-2.0f, 2.0f), 0), 0.1f));
+                        StartCoroutine(FallCamera(new Vector3(Random.Range(-2.0f, 5.0f), Random.Range(-7.0f, 7.0f), 0), new Vector3(4, Random.Range(-2.0f, 2.0f), 0), 0.1f));
                         hs.ApplyDamage((int)10);
                         underWaterTimer = 12.0f;
                     }
@@ -386,7 +390,7 @@ public class FPSController : MonoBehaviour
         }
 
         if (state == 0) //Stand Position
-        { 
+        {
             controller.height = 2.0f;
             controller.center = new Vector3(0, 0, 0);
 
@@ -396,40 +400,40 @@ public class FPSController : MonoBehaviour
             }
             else if (cameraGO.localPosition.y < normalHeight)
             {
-                cameraGO.localPosition = new Vector3(cameraGO.localPosition.x,cameraGO.localPosition.y + Time.deltaTime * crouchProneSpeed, cameraGO.localPosition.z) ;
+                cameraGO.localPosition = new Vector3(cameraGO.localPosition.x, cameraGO.localPosition.y + Time.deltaTime * crouchProneSpeed, cameraGO.localPosition.z);
             }
 
         }
         else if (state == 1) //Crouch Position
-        { 
+        {
             controller.height = 1.4f;
             controller.center = new Vector3(0, -0.3f, 0);
             if (cameraGO.localPosition.y != crouchHeight)
             {
                 if (cameraGO.localPosition.y > crouchHeight)
                 {
-                    cameraGO.localPosition = new Vector3(cameraGO.localPosition.x,cameraGO.localPosition.y - Time.deltaTime * crouchProneSpeed, cameraGO.localPosition.z) ;
+                    cameraGO.localPosition = new Vector3(cameraGO.localPosition.x, cameraGO.localPosition.y - Time.deltaTime * crouchProneSpeed, cameraGO.localPosition.z);
                 }
                 if (cameraGO.localPosition.y < crouchHeight)
                 {
-                    cameraGO.localPosition = new Vector3(cameraGO.localPosition.x, cameraGO.localPosition.y + Time.deltaTime * crouchProneSpeed, cameraGO.localPosition.z) ;
+                    cameraGO.localPosition = new Vector3(cameraGO.localPosition.x, cameraGO.localPosition.y + Time.deltaTime * crouchProneSpeed, cameraGO.localPosition.z);
                 }
 
             }
 
         }
         else if (state == 2) //Prone Position
-        { 
+        {
             controller.height = 0.6f;
             controller.center = new Vector3(0, -0.7f, 0);
 
             if (cameraGO.localPosition.y < proneHeight)
             {
-                cameraGO.localPosition = new Vector3(cameraGO.localPosition.x,proneHeight,cameraGO.localPosition.z);
+                cameraGO.localPosition = new Vector3(cameraGO.localPosition.x, proneHeight, cameraGO.localPosition.z);
             }
             else if (cameraGO.localPosition.y > proneHeight)
             {
-                cameraGO.localPosition = new Vector3(cameraGO.localPosition.x, cameraGO.localPosition.y - Time.deltaTime * crouchProneSpeed, cameraGO.localPosition.z); 
+                cameraGO.localPosition = new Vector3(cameraGO.localPosition.x, cameraGO.localPosition.y - Time.deltaTime * crouchProneSpeed, cameraGO.localPosition.z);
             }
         }
 
@@ -461,16 +465,21 @@ public class FPSController : MonoBehaviour
         if (swimming)
         {
             moveDirection.y = 0.5f + (underwaterLevel - transform.position.y);
-			
-			if(underWater){
-				if(emiter != null && emiter.isPlaying){
-					emiter.Stop();
-				}	
-			}else{
-				if(emiter != null && !emiter.isPlaying){
-					emiter.Play();
-				}	
-			}
+
+            if (underWater)
+            {
+                if (emiter != null && emiter.isPlaying)
+                {
+                    emiter.Stop();
+                }
+            }
+            else
+            {
+                if (emiter != null && !emiter.isPlaying)
+                {
+                    emiter.Play();
+                }
+            }
 
             if (transform.position.y > underwaterLevel)
             {
@@ -479,20 +488,21 @@ public class FPSController : MonoBehaviour
                     GetComponent<AudioSource>().clip = inhale;
                     GetComponent<AudioSource>().Play();
                 }
-				if(underWater){
-					RenderSettings.fogDensity = 0.003f;
-					if(ambientSource) ambientSource.Play();
-					underWater = false;
-					underWaterTimer = 0.0f;
-					profile.depthOfField.enabled = false;
-					aSource.Stop();
-				}
+                if (underWater)
+                {
+                    RenderSettings.fogDensity = 0.003f;
+                    if (ambientSource) ambientSource.Play();
+                    underWater = false;
+                    underWaterTimer = 0.0f;
+                    profile.depthOfField.enabled = false;
+                    aSource.Stop();
+                }
             }
 
             if (transform.position.y > waterLevel && grounded)
             {
                 swimming = false;
-				
+
                 if (emiter)
                 {
                     emiter.Stop();
@@ -508,7 +518,7 @@ public class FPSController : MonoBehaviour
         Quaternion s = fallEffect.localRotation;
         Quaternion sw = fallEffectWep.localRotation;
         Quaternion e = fallEffect.localRotation * Quaternion.Euler(d);
-		
+
         float r = 1.0f / ta;
         float t = 0.0f;
         while (t < 1.0f)
@@ -524,9 +534,9 @@ public class FPSController : MonoBehaviour
     {
         waterLevel = s + 0.9f;
         underwaterLevel = s + 0.4f;
-		profile.depthOfField.enabled = true;
-		RenderSettings.fogDensity = 0.05f;
-		if(ambientSource) ambientSource.Stop();
+        profile.depthOfField.enabled = true;
+        RenderSettings.fogDensity = 0.05f;
+        if (ambientSource) ambientSource.Stop();
 
         if (GetComponent<AudioSource>().isPlaying)
             GetComponent<AudioSource>().Stop();
@@ -551,7 +561,7 @@ public class FPSController : MonoBehaviour
                 waterSource.PlayOneShot(enterPoolSplash, 1.0f);
             }
 
-            if(emiter == null) emiter = Instantiate(waterFoam, transform.position + new Vector3(0, -0.7f, 0), transform.rotation) as ParticleSystem;
+            if (emiter == null) emiter = Instantiate(waterFoam, transform.position + new Vector3(0, -0.7f, 0), transform.rotation) as ParticleSystem;
             emiter.transform.parent = this.transform;
         }
 
@@ -563,7 +573,7 @@ public class FPSController : MonoBehaviour
     {
         hs.PlayerFallDamage(fallDistance * fallDamageMultiplier);
         if (state < 2) StartCoroutine(footsteps.JumpLand());
-        StartCoroutine( FallCamera(new Vector3(12, Random.Range(-2.0f, 2.0f), 0), new Vector3(4, Random.Range(-1.0f, 1.0f), 0), 0.1f));
+        StartCoroutine(FallCamera(new Vector3(12, Random.Range(-2.0f, 2.0f), 0), new Vector3(4, Random.Range(-1.0f, 1.0f), 0), 0.1f));
     }
 
     public void OnLadder()
