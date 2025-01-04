@@ -95,8 +95,7 @@ public class FPSController : MonoBehaviour
     private FixedJoystick moveJoystick;
     void Start()
     {
-        moveJoystick = GameObject.FindObjectOfType<FixedJoystick>();
-
+        moveJoystick = FindObjectOfType<FixedJoystick>();
 
         myTransform = transform;
         rayDistance = controller.height / 2 + 1.1f;
@@ -223,10 +222,14 @@ public class FPSController : MonoBehaviour
                     run = false;
                 }
 
-                if (Cursor.lockState == CursorLockMode.Locked)
+                if (Cursor.lockState == CursorLockMode.Locked || moveJoystick.Direction.magnitude > 0)
+                {
                     moveDirection = new Vector3(inputX * inputModifyFactor, -antiBumpFactor, inputY * inputModifyFactor);
+                }
                 else
+                {
                     moveDirection = new Vector3(0, -antiBumpFactor, 0);
+                }
 
                 moveDirection = myTransform.TransformDirection(moveDirection);
                 moveDirection *= speed;

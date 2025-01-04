@@ -27,51 +27,32 @@ public class MouseLook : MonoBehaviour
 
 	void Update()
 	{
-		if (Cursor.lockState == CursorLockMode.None) return;
-
-		// Get input from either mouse or touch
 		float inputX = 0;
 		float inputY = 0;
 
-		// Handle touch input
+#if UNITY_ANDROID || UNITY_IOS
+		// Use the entire screen for look/rotation
 		if (Input.touchCount > 0)
 		{
 			Touch touch = Input.GetTouch(0);
 
-			switch (touch.phase)
+			// Only process touches that aren't over UI elements
+			if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId))
 			{
-				case TouchPhase.Began:
-					isTouching = true;
-					break;
-
-				case TouchPhase.Moved:
-					if (isTouching)
-					{
-						// Convert touch delta to rotation
-						touchDelta = touch.deltaPosition;
-						inputX = touchDelta.x * 0.1f; // Adjust sensitivity multiplier as needed
-						inputY = touchDelta.y * 0.1f;
-					}
-					break;
-
-				case TouchPhase.Ended:
-				case TouchPhase.Canceled:
-					isTouching = false;
-					break;
+				inputX = touch.deltaPosition.x * sensitivityX * 0.1f;
+				inputY = touch.deltaPosition.y * sensitivityY * 0.1f;
 			}
 		}
-		// Handle mouse input
-		else
-		{
-			inputX = Input.GetAxis("Mouse X");
-			inputY = Input.GetAxis("Mouse Y");
-		}
+#else
+        // PC controls remain the same
+        inputX = Input.GetAxis("Mouse X") * sensitivityX;
+        inputY = Input.GetAxis("Mouse Y") * sensitivityY;
+#endif
 
 		if (axes == RotationAxes.MouseXAndY)
 		{
-			// Apply rotation based on input
-			rotationX += (inputX * sensitivityX / 30 * cmra.GetComponent<Camera>().fieldOfView + offsetX);
-			rotationY += (inputY * sensitivityY / 30 * cmra.GetComponent<Camera>().fieldOfView + offsetY);
+			rotationX += inputX;
+			rotationY += inputY;
 
 			rotationX = ClampAngle(rotationX, minimumX, maximumX);
 			rotationY = ClampAngle(rotationY, minimumY, maximumY);

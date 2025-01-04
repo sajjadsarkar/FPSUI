@@ -68,8 +68,6 @@ public class GameManager : MonoBehaviour
 		cam.enabled = aListener.enabled = false;
 		CanvasManager.instance.Fade(0);
 		playerUI.SetActive(true);
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	public void CloseMenu()
