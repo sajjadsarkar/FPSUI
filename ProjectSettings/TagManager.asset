@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Damage
+  - Enemy
+  - ScoreManager
+  - Ammo
+  - WeaponCamera
+  - Blood
+  - Weapon
+  - Launcher
+  - Ladder
   layers:
   - Default
   - TransparentFX

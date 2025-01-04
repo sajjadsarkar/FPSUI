@@ -29,24 +29,22 @@ public class MouseLook : MonoBehaviour
 	{
 		float inputX = 0;
 		float inputY = 0;
-
 #if UNITY_ANDROID || UNITY_IOS
 		// Use the entire screen for look/rotation
 		if (Input.touchCount > 0)
 		{
 			Touch touch = Input.GetTouch(0);
 
-			// Only process touches that aren't over UI elements
-			if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+			// Enhanced UI check - using IsPointerOverGameObject
+			bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId) ||
+						   UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+
+			if (!isOverUI)
 			{
 				inputX = touch.deltaPosition.x * sensitivityX * 0.1f;
 				inputY = touch.deltaPosition.y * sensitivityY * 0.1f;
 			}
 		}
-#else
-        // PC controls remain the same
-        inputX = Input.GetAxis("Mouse X") * sensitivityX;
-        inputY = Input.GetAxis("Mouse Y") * sensitivityY;
 #endif
 
 		if (axes == RotationAxes.MouseXAndY)
