@@ -185,22 +185,24 @@ public class TargetManager : MonoBehaviour
                 if (firstKillObject != null)
                     firstKillObject.SetActive(true);
                 break;
-            case 2:
-                if (secondKillObject != null)
-                    secondKillObject.SetActive(true);
-                break;
+
             case 3:
                 if (thirdKillObject != null)
-                    thirdKillObject.SetActive(true);
+                    secondKillObject.SetActive(true);
+
                 break;
             case 4:
                 if (fourthKillObject != null)
-                    fourthKillObject.SetActive(true);
+                    thirdKillObject.SetActive(true);
+                Invoke("SHowWIn", 1.5f);
                 Invoke("SHowVictorty", 3f);
                 break;
         }
     }
-
+    public void SHowWIn()
+    {
+        fourthKillObject.SetActive(true);
+    }
     public void SHowVictorty()
     {
         VIctoryUI.SetActive(true);
