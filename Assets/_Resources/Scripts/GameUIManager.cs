@@ -51,4 +51,28 @@ public class GameUIManager : MonoBehaviour
         if (weaponManager != null)
             weaponManager.PickupWeapon();
     }
+    public void OnFireButtonPressed()
+    {
+        WeaponScriptNEW weapon = FindObjectOfType<WeaponScriptNEW>();
+        if (weapon != null && weapon.selected)
+        {
+            if (weapon.currentMode == fireMode.semi || weapon.currentMode == fireMode.auto)
+            {
+                weapon.FireSemi();
+            }
+            else if (weapon.currentMode == fireMode.launcher)
+            {
+                weapon.FireLauncher();
+            }
+            else if (weapon.currentMode == fireMode.burst)
+            {
+                StartCoroutine(weapon.FireBurst());
+            }
+            else if (weapon.currentMode == fireMode.shotgun)
+            {
+                weapon.FireShotgun();
+            }
+        }
+    }
+
 }

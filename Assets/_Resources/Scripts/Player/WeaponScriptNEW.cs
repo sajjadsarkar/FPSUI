@@ -134,11 +134,11 @@ public class WeaponScriptNEW : MonoBehaviour
     private int bulletsLeft = 0;
     private RaycastHit hit;
     private float camFOV = 60.0f;
-	private CanvasManager canvas;
+    private CanvasManager canvas;
 
     void Start()
     {
-		canvas = CanvasManager.instance;
+        canvas = CanvasManager.instance;
         muzzleFlash.enabled = false;
         muzzleLight.enabled = false;
         bulletsLeft = bulletsPerMag;
@@ -150,11 +150,11 @@ public class WeaponScriptNEW : MonoBehaviour
         {
             magazines = magazines * bulletsPerMag;
         }
-		
-		if (aimMode == Aim.Sniper)
-		{
-			scopeTexture = CanvasManager.instance.sniperScope;
-		}
+
+        if (aimMode == Aim.Sniper)
+        {
+            scopeTexture = CanvasManager.instance.sniperScope;
+        }
     }
 
     void Update()
@@ -175,7 +175,7 @@ public class WeaponScriptNEW : MonoBehaviour
                 }
                 else if (currentMode == fireMode.burst)
                 {
-                   StartCoroutine(FireBurst());
+                    StartCoroutine(FireBurst());
                 }
                 else if (currentMode == fireMode.shotgun)
                 {
@@ -207,7 +207,7 @@ public class WeaponScriptNEW : MonoBehaviour
             if (!aiming)
             {
                 aiming = true;
-				canvas.crossAlpha.alpha = 0f;
+                canvas.crossAlpha.alpha = 0f;
                 curVect = aimPosition - transform.localPosition;
                 scopeTime = Time.time + aimSpeed;
             }
@@ -228,7 +228,7 @@ public class WeaponScriptNEW : MonoBehaviour
                 if (Time.time >= scopeTime && !inScope)
                 {
                     inScope = true;
-					scopeTexture.color = new Color (1,1,1,0.9f);
+                    scopeTexture.color = new Color(1, 1, 1, 0.9f);
                     Component[] gos = GetComponentsInChildren<Renderer>();
                     foreach (var go in gos)
                     {
@@ -243,9 +243,9 @@ public class WeaponScriptNEW : MonoBehaviour
             if (aiming)
             {
                 aiming = false;
-				canvas.crossAlpha.alpha = 1f;
+                canvas.crossAlpha.alpha = 1f;
                 inScope = false;
-				if (aimMode == Aim.Sniper) scopeTexture.color = new Color (1,1,1,0f);
+                if (aimMode == Aim.Sniper) scopeTexture.color = new Color(1, 1, 1, 0f);
                 curVect = hipPosition - transform.localPosition;
                 if (aimMode == Aim.Sniper)
                 {
@@ -292,7 +292,7 @@ public class WeaponScriptNEW : MonoBehaviour
 
         if (fpscontroller.velMagnitude > 3.0f)
         {
-            triggerTime += inaccuracyDecreaseOverTime/2f;
+            triggerTime += inaccuracyDecreaseOverTime / 2f;
         }
 
         if (isFiring)
@@ -314,9 +314,9 @@ public class WeaponScriptNEW : MonoBehaviour
         {
             triggerTime = baseInaccuracy;
         }
-		
-		wepManager.crosshairSize = triggerTime;
-		
+
+        wepManager.crosshairSize = triggerTime;
+
         if (nextFireTime > Time.time)
         {
             isFiring = false;
@@ -326,7 +326,7 @@ public class WeaponScriptNEW : MonoBehaviour
         {
             if (currentMode != firstMode)
             {
-               StartCoroutine(FirstFireMode());
+                StartCoroutine(FirstFireMode());
             }
             else
             {
@@ -381,13 +381,13 @@ public class WeaponScriptNEW : MonoBehaviour
         canSwicthMode = true;
     }
 
-    void FireSemi()
+    public void FireSemi()
     {
         if (reloading || bulletsLeft <= 0)
         {
             if (bulletsLeft == 0)
             {
-               StartCoroutine(OutOfAmmo());
+                StartCoroutine(OutOfAmmo());
             }
             return;
         }
@@ -402,13 +402,13 @@ public class WeaponScriptNEW : MonoBehaviour
         }
     }
 
-    void FireLauncher()
+    public void FireLauncher()
     {
         if (reloading || projectiles <= 0)
         {
             if (projectiles == 0)
             {
-               StartCoroutine( OutOfAmmo());
+                StartCoroutine(OutOfAmmo());
             }
             return;
         }
@@ -423,7 +423,7 @@ public class WeaponScriptNEW : MonoBehaviour
         }
     }
 
-    IEnumerator FireBurst()
+    public IEnumerator FireBurst()
     {
         int shotCounter = 0;
 
@@ -431,7 +431,7 @@ public class WeaponScriptNEW : MonoBehaviour
         {
             if (bulletsLeft <= 0)
             {
-               StartCoroutine(OutOfAmmo());
+                StartCoroutine(OutOfAmmo());
             }
             yield break;
         }
@@ -456,13 +456,13 @@ public class WeaponScriptNEW : MonoBehaviour
         bursting = false;
     }
 
-    void FireShotgun()
+    public void FireShotgun()
     {
         if (reloading || bulletsLeft <= 0 || draw)
         {
             if (bulletsLeft == 0)
             {
-               StartCoroutine(OutOfAmmo());
+                StartCoroutine(OutOfAmmo());
             }
             return;
         }
@@ -482,7 +482,7 @@ public class WeaponScriptNEW : MonoBehaviour
             bulletsLeft--;
             nextFireTime = Time.time + fireRate;
         }
-		canvas.UpdateBullets(bulletsLeft);
+        canvas.UpdateBullets(bulletsLeft);
         weaponAnim.Rewind(fireAnim);
         weaponAnim.Play(fireAnim);
 
@@ -498,14 +498,14 @@ public class WeaponScriptNEW : MonoBehaviour
         {
             if (bulletsLeft <= 0)
             {
-               StartCoroutine(OutOfAmmo());
+                StartCoroutine(OutOfAmmo());
             }
             return;
         }
 
         Vector3 dir = gameObject.transform.TransformDirection(new Vector3(Random.Range(-0.01f, 0.01f) * triggerTime, Random.Range(-0.01f, 0.01f) * triggerTime, 1));
         Vector3 pos = transform.parent.position;
-		
+
         if (Physics.Raycast(pos, dir, out hit, range, layerMask))
         {
             Vector3 contact = hit.point;
@@ -515,7 +515,7 @@ public class WeaponScriptNEW : MonoBehaviour
             if (hit.rigidbody)
                 hit.rigidbody.AddForceAtPosition(force * dir, hit.point);
 
-            if (hit.collider.CompareTag( "Concrete"))
+            if (hit.collider.CompareTag("Concrete"))
             {
                 GameObject concMark = Instantiate(Concrete, contact, rot) as GameObject;
                 concMark.transform.localPosition += .02f * hit.normal;
@@ -537,7 +537,7 @@ public class WeaponScriptNEW : MonoBehaviour
                 woodMark.transform.localScale = new Vector3(rScale, rScale, rScale);
                 woodMark.transform.parent = hit.transform;
             }
-            else if (hit.collider.CompareTag( "Metal"))
+            else if (hit.collider.CompareTag("Metal"))
             {
                 GameObject metalMark = Instantiate(Metal, contact, rot) as GameObject;
                 metalMark.transform.localPosition += .02f * hit.normal;
@@ -566,9 +566,9 @@ public class WeaponScriptNEW : MonoBehaviour
                 def.transform.localScale = new Vector3(rScale, rScale, rScale);
                 def.transform.parent = hit.transform;
             }
-			
-			IDamagable damagable = hit.collider.GetComponent<IDamagable>();
-			if(damagable != null) damagable.ApplyDamage(damage);
+
+            IDamagable damagable = hit.collider.GetComponent<IDamagable>();
+            if (damagable != null) damagable.ApplyDamage(damage);
         }
 
         aSource.PlayOneShot(soundFire);
@@ -581,7 +581,7 @@ public class WeaponScriptNEW : MonoBehaviour
         kickGO.localRotation = Quaternion.Euler(kickGO.localRotation.eulerAngles - new Vector3(kickUp, Random.Range(-kickSideways, kickSideways), 0));
 
         bulletsLeft--;
-		canvas.UpdateBullets(bulletsLeft);
+        canvas.UpdateBullets(bulletsLeft);
     }
 
     void FireOnePellet()
@@ -638,7 +638,7 @@ public class WeaponScriptNEW : MonoBehaviour
             {
                 Instantiate(Water, contact, rot);
             }
-            else if (hit.collider.CompareTag( "Usable"))
+            else if (hit.collider.CompareTag("Usable"))
             {
             }
             else
@@ -648,9 +648,9 @@ public class WeaponScriptNEW : MonoBehaviour
                 def.transform.localScale = new Vector3(rScale, rScale, rScale);
                 def.transform.parent = hit.transform;
             }
-			
-			IDamagable damagable = hit.collider.GetComponent<IDamagable>();
-			if(damagable != null) damagable.ApplyDamage(damage);
+
+            IDamagable damagable = hit.collider.GetComponent<IDamagable>();
+            if (damagable != null) damagable.ApplyDamage(damage);
         }
     }
 
@@ -674,10 +674,10 @@ public class WeaponScriptNEW : MonoBehaviour
         weaponAnim.Play(fireAnim);
 
         projectiles--;
-		canvas.UpdateProjectileUI(projectiles);
+        canvas.UpdateProjectileUI(projectiles);
 
         if (reloadProjectile)
-           StartCoroutine( ReloadLauncher());
+            StartCoroutine(ReloadLauncher());
     }
 
     IEnumerator OutOfAmmo()
@@ -704,7 +704,7 @@ public class WeaponScriptNEW : MonoBehaviour
             canSwicthMode = false;
 
             if (rocket != null)
-               StartCoroutine(DisableProjectileRenderer());
+                StartCoroutine(DisableProjectileRenderer());
 
             yield return new WaitForSeconds(0.5f);
             if (soundReloadLauncher)
@@ -717,7 +717,7 @@ public class WeaponScriptNEW : MonoBehaviour
             canSwicthMode = true;
             reloading = false;
             wepManager.canSwitch = true;
-			canvas.UpdateProjectileUI(projectiles);
+            canvas.UpdateProjectileUI(projectiles);
         }
         else
         {
@@ -760,12 +760,12 @@ public class WeaponScriptNEW : MonoBehaviour
                 magazines--;
                 bulletsLeft = bulletsPerMag;
             }
-			canvas.UpdateAmmoUI(bulletsLeft, magazines, projectiles);
+            canvas.UpdateAmmoUI(bulletsLeft, magazines, projectiles);
             reloading = false;
             canSwicthMode = true;
             isFiring = false;
         }
-		else if (ammoMode == Ammo.Bullets)
+        else if (ammoMode == Ammo.Bullets)
         {
             if (magazines > 0 && bulletsLeft != bulletsPerMag)
             {
@@ -781,7 +781,7 @@ public class WeaponScriptNEW : MonoBehaviour
                     bulletsLeft = bulletsPerMag;
                     canSwicthMode = true;
                     reloading = false;
-					canvas.UpdateAmmoUI(bulletsLeft, magazines, projectiles);
+                    canvas.UpdateAmmoUI(bulletsLeft, magazines, projectiles);
                     yield break;
                 }
                 else
@@ -797,7 +797,7 @@ public class WeaponScriptNEW : MonoBehaviour
                     bulletsLeft = bullet;
                     canSwicthMode = true;
                     reloading = false;
-					canvas.UpdateAmmoUI(bulletsLeft, magazines, projectiles);
+                    canvas.UpdateAmmoUI(bulletsLeft, magazines, projectiles);
                     yield break;
                 }
             }
@@ -811,7 +811,7 @@ public class WeaponScriptNEW : MonoBehaviour
         canSwicthMode = false;
         aSource.clip = soundDraw;
         aSource.Play();
-		StartCoroutine(UpdateUI());
+        StartCoroutine(UpdateUI());
         weaponAnim[drawAnim].speed = drawAnimSpeed;
         weaponAnim.Rewind(drawAnim);
         weaponAnim.Play(drawAnim, PlayMode.StopAll);
@@ -822,29 +822,31 @@ public class WeaponScriptNEW : MonoBehaviour
         canSwicthMode = true;
         selected = true;
     }
-	
-	IEnumerator UpdateUI()
-	{
-		yield return 0;
-		canvas.ShowCrosshair(1);
-		canvas.crossAlpha.alpha = 1f;
-		canvas.UpdateAmmoUI(bulletsLeft, magazines, projectiles);
-		if (firstMode == fireMode.launcher || secondMode == fireMode.launcher){
-			canvas.ShowProjectilesUI(true);
-		}else canvas.ShowProjectilesUI(false);	
-	}
-	
+
+    IEnumerator UpdateUI()
+    {
+        yield return 0;
+        canvas.ShowCrosshair(1);
+        canvas.crossAlpha.alpha = 1f;
+        canvas.UpdateAmmoUI(bulletsLeft, magazines, projectiles);
+        if (firstMode == fireMode.launcher || secondMode == fireMode.launcher)
+        {
+            canvas.ShowProjectilesUI(true);
+        }
+        else canvas.ShowProjectilesUI(false);
+    }
+
     public void Deselect()
     {
         selected = false;
-		bursting = false;
-		aiming = true;
-		canvas.crossAlpha.alpha = 0f;
-		if (aimMode == Aim.Sniper) scopeTexture.color = new Color (1,1,1,0f);
+        bursting = false;
+        aiming = true;
+        canvas.crossAlpha.alpha = 0f;
+        if (aimMode == Aim.Sniper) scopeTexture.color = new Color(1, 1, 1, 0f);
         mainCamera.fieldOfView = camFOV;
         transform.localPosition = hipPosition;
-		
-		if (rocket != null && projectiles > 0)
+
+        if (rocket != null && projectiles > 0)
         {
             rocket.enabled = true;
         }
