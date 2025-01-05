@@ -330,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDelay: 0.6
+  startDelay: 0.5
   glitchMaterial: {fileID: 2100000, guid: b1a792fc7fef99349b95862580d58529, type: 2}
 --- !u!114 &5440187
 MonoBehaviour:
@@ -4047,7 +4047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDelay: 0.1
+  startDelay: 0
   glitchMaterial: {fileID: 2100000, guid: b1a792fc7fef99349b95862580d58529, type: 2}
 --- !u!1 &142373725
 GameObject:
@@ -5062,7 +5062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDelay: 3
+  startDelay: 0.5
   glitchMaterial: {fileID: 2100000, guid: b1a792fc7fef99349b95862580d58529, type: 2}
 --- !u!114 &195452704
 MonoBehaviour:
@@ -22483,7 +22483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDelay: 1
+  startDelay: 0.5
   glitchMaterial: {fileID: 2100000, guid: b1a792fc7fef99349b95862580d58529, type: 2}
 --- !u!114 &944161804
 MonoBehaviour:
@@ -23957,7 +23957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDelay: 2
+  startDelay: 0.5
   glitchMaterial: {fileID: 2100000, guid: b1a792fc7fef99349b95862580d58529, type: 2}
 --- !u!114 &1062260776
 MonoBehaviour:
@@ -39067,7 +39067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDelay: 3
+  startDelay: 0.5
   glitchMaterial: {fileID: 2100000, guid: b1a792fc7fef99349b95862580d58529, type: 2}
 --- !u!114 &1780674897
 MonoBehaviour:
