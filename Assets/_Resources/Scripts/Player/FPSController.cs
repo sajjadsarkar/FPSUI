@@ -595,4 +595,63 @@ public class FPSController : MonoBehaviour
             moveDirection = dir.normalized * 5.0f;
         }
     }
+
+    public void DoJump()
+    {
+        if (jumpTimer >= antiBunnyHopFactor && state == 0)
+        {
+            jumpTimer = 0;
+            moveDirection.y = jumpSpeed;
+        }
+    }
+
+    public void ToggleRun()
+    {
+        if (canRun && state == 0 && !Input.GetButton("Fire2"))
+        {
+            run = !run;
+        }
+    }
+
+    public void ToggleCrouch()
+    {
+        CheckDistance();
+
+        if (state == 0)
+        {
+            state = 1;
+        }
+        else if (state == 1)
+        {
+            if (distanceToObstacle > 1.6f)
+            {
+                state = 0;
+            }
+        }
+        else if (state == 2)
+        {
+            if (distanceToObstacle > 1)
+            {
+                state = 1;
+            }
+        }
+    }
+
+    public void ToggleProne()
+    {
+        CheckDistance();
+        if (state == 0 || state == 1)
+        {
+            state = 2;
+        }
+        else if (state == 2)
+        {
+            if (distanceToObstacle > 1.6f)
+            {
+                state = 0;
+            }
+        }
+
+        if (!grounded) gravity = proneGravity;
+    }
 }

@@ -27,6 +27,10 @@ public class MouseLook : MonoBehaviour
 
 	void Update()
 	{
+		if (Cursor.lockState == CursorLockMode.None)
+		{
+			return;
+		}
 		float inputX = 0;
 		float inputY = 0;
 #if UNITY_ANDROID || UNITY_IOS

@@ -283,4 +283,24 @@ public class WeaponManager : MonoBehaviour
         canSwitch = true;
         SelectWeapon(weaponToSelect);
     }
+    public void PickupWeapon()
+    {
+        Vector3 pos = transform.parent.position;
+        Vector3 dir = transform.TransformDirection(Vector3.forward);
+
+        if (Physics.Raycast(pos, dir, out hit, dis, layerMaskWeapon))
+        {
+            WeaponIndex pre = hit.transform.GetComponent<WeaponIndex>();
+            setElement = pre.setWeapon;
+
+            if (canSwitch && weaponsInUse[0] != weaponsInGame[setElement] && weaponsInUse[1] != weaponsInGame[setElement])
+            {
+                DropWeapon(weaponToDrop);
+                StartCoroutine(DeselectWeapon());
+                weaponsInUse[weaponToSelect] = weaponsInGame[setElement];
+                Destroy(hit.transform.gameObject);
+            }
+        }
+    }
+
 }

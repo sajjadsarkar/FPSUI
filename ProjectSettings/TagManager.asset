@@ -13,6 +13,13 @@ TagManager:
   - Weapon
   - Launcher
   - Ladder
+  - Grass
+  - Water
+  - Metal
+  - Wood
+  - Dirt
+  - Concrete
+  - Usable
   layers:
   - Default
   - TransparentFX
