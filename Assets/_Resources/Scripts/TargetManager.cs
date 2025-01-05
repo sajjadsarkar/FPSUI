@@ -205,6 +205,7 @@ public class TargetManager : MonoBehaviour
     }
     public void SHowVictorty()
     {
+        fourthKillObject.SetActive(false);
         VIctoryUI.SetActive(true);
         RectTransform rect = VIctoryUI.GetComponent<RectTransform>();
         CanvasGroup canvasGroup = VIctoryUI.GetComponent<CanvasGroup>();
