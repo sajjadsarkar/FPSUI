@@ -41,16 +41,13 @@ public class WeaponManager : MonoBehaviour
         noteUI = CanvasManager.instance.note;
         CanvasManager.instance.SetWeapon(this);
 
-        for (int h = 0; h < worldModels.Length; h++)
-        {
-            weaponsInGame[h].SetActive(false);
-        }
+        // Initialize starting weapons
+        weaponsInUse[0] = weaponsInGame[1];
+        weaponsInUse[1] = weaponsInGame[2];
 
-        weaponsInUse[0] = weaponsInGame[selectWepSlot1];
-        weaponsInUse[1] = weaponsInGame[selectWepSlot2];
-
+        // Only activate the first weapon slot initially
         weaponToSelect = 0;
-        StartCoroutine(DeselectWeapon());
+        SelectWeapon(weaponToSelect);
     }
 
     void Update()
@@ -225,7 +222,7 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    IEnumerator DeselectWeapon()
+    public IEnumerator DeselectWeapon()
     {
         canSwitch = false;
 
