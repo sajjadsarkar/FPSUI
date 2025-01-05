@@ -56,8 +56,6 @@ public class WeaponManager : MonoBehaviour
     void Update()
     {
 
-        if (Cursor.lockState == CursorLockMode.None) return;
-
         if (Input.GetKeyDown("1") && weaponsInUse.Length >= 1 && canSwitch && weaponToSelect != 0)
         {
             StartCoroutine(DeselectWeapon());
