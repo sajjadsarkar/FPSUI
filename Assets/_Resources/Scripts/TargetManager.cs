@@ -21,7 +21,10 @@ public class TargetManager : MonoBehaviour
     public AudioSource aSource;
     public AudioClip countdownSound;
     Text timerText;
-
+    public GameObject firstKillObject;
+    public GameObject secondKillObject;
+    public GameObject thirdKillObject;
+    public GameObject fourthKillObject;
     void Start()
     {
         state = 0;
@@ -176,9 +179,25 @@ public class TargetManager : MonoBehaviour
             currentKillFeedIndex = (currentKillFeedIndex + 1) % killFeedObjects.Length;
         }
 
-        if (kills == 4)
+        switch (kills)
         {
-            Invoke("SHowVictorty", 3f);
+            case 1:
+                if (firstKillObject != null)
+                    firstKillObject.SetActive(true);
+                break;
+            case 2:
+                if (secondKillObject != null)
+                    secondKillObject.SetActive(true);
+                break;
+            case 3:
+                if (thirdKillObject != null)
+                    thirdKillObject.SetActive(true);
+                break;
+            case 4:
+                if (fourthKillObject != null)
+                    fourthKillObject.SetActive(true);
+                Invoke("SHowVictorty", 3f);
+                break;
         }
     }
 
