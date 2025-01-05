@@ -161,8 +161,6 @@ public class WeaponScriptNEW : MonoBehaviour
     {
         if (selected)
         {
-            if (Cursor.lockState == CursorLockMode.None) return;
-
             if (Input.GetButtonDown("Fire"))
             {
                 if (currentMode == fireMode.semi)
@@ -849,6 +847,34 @@ public class WeaponScriptNEW : MonoBehaviour
         if (rocket != null && projectiles > 0)
         {
             rocket.enabled = true;
+        }
+    }
+    public void ToggleScope()
+    {
+        inScope = !inScope;
+
+        if (inScope)
+        {
+            scopeTexture.color = new Color(1, 1, 1, 0.9f);
+            Component[] gos = GetComponentsInChildren<Renderer>();
+            foreach (var go in gos)
+            {
+                Renderer a = go as Renderer;
+                a.enabled = false;
+            }
+            mainCamera.fieldOfView = FOV;
+        }
+        else
+        {
+            scopeTexture.color = new Color(1, 1, 1, 0f);
+            Component[] go = GetComponentsInChildren<Renderer>();
+            foreach (var g in go)
+            {
+                Renderer b = g as Renderer;
+                if (b.name != "muzzle_flash")
+                    b.enabled = true;
+            }
+            mainCamera.fieldOfView = camFOV;
         }
     }
 

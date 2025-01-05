@@ -53,6 +53,15 @@ public class GameUIManager : MonoBehaviour
             StartCoroutine(weapon.Reload());
         }
     }
+    public void OnScopeTogglePressed()
+    {
+        WeaponScriptNEW weapon = FindObjectOfType<WeaponScriptNEW>();
+        if (weapon != null && weapon.selected && weapon.aimMode == Aim.Sniper)
+        {
+            weapon.ToggleScope();
+        }
+    }
+
     public void OnPickupButtonPressed()
     {
         WeaponManager weaponManager = FindObjectOfType<WeaponManager>();
