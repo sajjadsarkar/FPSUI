@@ -56,11 +56,32 @@ public class GameUIManager : MonoBehaviour
     public void OnScopeTogglePressed()
     {
         WeaponScriptNEW weapon = FindObjectOfType<WeaponScriptNEW>();
-        if (weapon != null && weapon.selected && weapon.aimMode == Aim.Sniper)
+        if (weapon != null && weapon.selected)
         {
-            weapon.ToggleScope();
+            // Check for both sniper and regular aim modes
+            if (weapon.aimMode == Aim.Sniper || weapon.aimMode == Aim.Simple)
+            {
+                // Handle aiming for both modes
+                if (!weapon.reloading)
+                {
+                    weapon.aiming = true;
+                    CanvasManager.instance.crossAlpha.alpha = 0f;
+
+                    if (weapon.aimMode == Aim.Sniper)
+                    {
+                        weapon.ToggleScope();
+                    }
+                    else
+                    {
+                        // Regular aim mode zoom
+                        weapon.transform.localPosition = weapon.aimPosition;
+                        weapon.mainCamera.fieldOfView = weapon.FOV;
+                    }
+                }
+            }
         }
     }
+
 
     public void OnPickupButtonPressed()
     {

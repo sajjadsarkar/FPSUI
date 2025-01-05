@@ -39,7 +39,7 @@ public class WeaponScriptNEW : MonoBehaviour
 
     [Header("Aiming")]
     public Vector3 aimPosition;
-    private bool aiming;
+    public bool aiming;
     private Vector3 curVect;
     private Vector3 hipPosition = Vector3.zero;
     public float aimSpeed = 0.25f;
