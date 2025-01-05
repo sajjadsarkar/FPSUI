@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.SocialPlatforms.Impl;
+using DG.Tweening;
 
 public class TargetManager : MonoBehaviour
 {
@@ -135,26 +136,80 @@ public class TargetManager : MonoBehaviour
     {
         kills++;
 
-        // Get the current kill feed object
+        // Hide all currently visible kill feeds
+        for (int i = 0; i < killFeedObjects.Length; i++)
+        {
+            if (i != currentKillFeedIndex && killFeedObjects[i].activeSelf)
+            {
+                killFeedObjects[i].transform.DOKill();
+                killFeedObjects[i].SetActive(false);
+            }
+        }
+
         GameObject currentFeed = killFeedObjects[currentKillFeedIndex];
 
         if (currentFeed != null)
         {
-            // Reset alpha and enable
+            RectTransform rect = currentFeed.GetComponent<RectTransform>();
+            float width = rect.rect.width;
+
+            // Start from current position - width (off-screen to the left)
+            Vector3 startPos = currentFeed.transform.localPosition - new Vector3(width, 0f, 0f);
+            Vector3 targetPos = currentFeed.transform.localPosition;
+
+            currentFeed.transform.localPosition = startPos;
             Image img = currentFeed.GetComponent<Image>();
-            Color color = img.color;
-            color.a = 1f;
-            img.color = color;
+            img.color = new Color(img.color.r, img.color.g, img.color.b, 0f);
             currentFeed.SetActive(true);
 
-            // Start fade for THIS kill feed
-            StartCoroutine(FadeKillFeed(currentFeed));
+            Sequence sequence = DOTween.Sequence();
 
-            // Update index for next kill feed
+            sequence.Append(currentFeed.transform.DOLocalMove(targetPos, 0.5f).SetEase(Ease.OutBack))
+                    .Join(img.DOFade(1f, 0.3f))
+                    .AppendInterval(2f)
+                    .Append(img.DOFade(0f, 0.5f))
+                    .OnComplete(() =>
+                    {
+                        currentFeed.SetActive(false);
+                    });
+
             currentKillFeedIndex = (currentKillFeedIndex + 1) % killFeedObjects.Length;
+        }
+
+        if (kills == 4)
+        {
+            Invoke("SHowVictorty", 3f);
         }
     }
 
+    public void SHowVictorty()
+    {
+        VIctoryUI.SetActive(true);
+        RectTransform rect = VIctoryUI.GetComponent<RectTransform>();
+        CanvasGroup canvasGroup = VIctoryUI.GetComponent<CanvasGroup>();
+
+        if (canvasGroup == null)
+            canvasGroup = VIctoryUI.AddComponent<CanvasGroup>();
+
+        // Initial setup
+        rect.anchoredPosition = new Vector2(-Screen.width, 0);
+        rect.localScale = Vector3.one;
+        canvasGroup.alpha = 0;
+
+        Sequence victorySequence = DOTween.Sequence();
+
+        victorySequence
+            // Clean slide in from left
+            .Append(rect.DOAnchorPos(Vector2.zero, 0.3f)
+                .SetEase(Ease.OutQuint))
+            // Smooth fade
+            .Join(canvasGroup.DOFade(1, 0.3f));
+
+        // Quick camera shake
+        Camera.main.DOShakePosition(0.2f, 0.3f, 20, 90, false);
+
+        victorySequence.SetAutoKill(true);
+    }
     private IEnumerator FadeKillFeed(GameObject feedObject)
     {
         // Wait before starting fade
