@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Linq;
 
-public class TargetManager : MonoBehaviour 
+public class TargetManager : MonoBehaviour
 {
     public Target[] allTargets;
     public float hitpoints = 100f;
@@ -16,12 +17,12 @@ public class TargetManager : MonoBehaviour
 
     public AudioSource aSource;
     public AudioClip countdownSound;
-	Text timerText;
+    Text timerText;
 
     void Start()
     {
         state = 0;
-		timerText = CanvasManager.instance.timerText;
+        timerText = CanvasManager.instance.timerText;
 
         for (int i = 0; i < allTargets.Length; i++)
         {
@@ -33,9 +34,19 @@ public class TargetManager : MonoBehaviour
 
     public void NextTarget()
     {
-        StartCoroutine(allTargets[Random.Range(0, allTargets.Length)].TargetUp());
-    }
+        // Filter out destroyed targets
+        var remainingTargets = allTargets.Where(t => t != null).ToArray();
 
+        if (remainingTargets.Length > 0)
+        {
+            StartCoroutine(remainingTargets[Random.Range(0, remainingTargets.Length)].TargetUp());
+        }
+        else
+        {
+            // All targets destroyed, end the game
+            StartCoroutine(TrainingEnds());
+        }
+    }
     void StartTraining()
     {
         for (int i = 0; i < allTargets.Length; i++)
@@ -69,14 +80,14 @@ public class TargetManager : MonoBehaviour
 
             if (timer <= 0.0f)
             {
-               StartCoroutine(TrainingEnds());
+                StartCoroutine(TrainingEnds());
             }
         }
-		
-		if (state == 1 || state == 2)
-		{	 
-			timerText.text = FormatSeconds(timer);
-		} 
+
+        if (state == 1 || state == 2)
+        {
+            timerText.text = FormatSeconds(timer);
+        }
     }
 
     public void SetScore(int s, bool hs)
@@ -89,9 +100,9 @@ public class TargetManager : MonoBehaviour
     IEnumerator TrainingEnds()
     {
         state = 3;
-		CanvasManager.instance.timerUI.SetActive(false);
-		CanvasManager.instance.ShowResult("<color=#88FF6AFF>SCORE :  </color>" + trainingScore, "<color=#88FF6AFF>KILLS :  </color>" + kills, "<color=#88FF6AFF>HEADSHOTS :  </color>" + headshots);	
-		
+        CanvasManager.instance.timerUI.SetActive(false);
+        CanvasManager.instance.ShowResult("<color=#88FF6AFF>SCORE :  </color>" + trainingScore, "<color=#88FF6AFF>KILLS :  </color>" + kills, "<color=#88FF6AFF>HEADSHOTS :  </color>" + headshots);
+
         yield return new WaitForSeconds(10.0f);
         state = 0;
         for (int i = 0; i < allTargets.Length; i++)
@@ -109,13 +120,13 @@ public class TargetManager : MonoBehaviour
         int seconds = (d % (60 * 100)) / 100;
         return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-	
+
     void Action()
     {
         if (state == 0)
-		{
-			StartTraining();
-			CanvasManager.instance.timerUI.SetActive(true);	
-		}	
+        {
+            StartTraining();
+            CanvasManager.instance.timerUI.SetActive(true);
+        }
     }
 }

@@ -35,6 +35,9 @@ public class Target : MonoBehaviour
                 scoreManager.AddScore(score);
                 if (targetManager.state == 2)
                     targetManager.SetScore(score, head);
+
+                // Add this line to destroy the target
+                Destroy(gameObject, 1f); // Destroys after 1 second to allow animation
             }
         }
     }
@@ -52,14 +55,14 @@ public class Target : MonoBehaviour
         }
 
         if (!trainingMode)
-		{
+        {
             StartCoroutine(ResetTarget());
-		}	
+        }
         else
-		{
+        {
             if (targetManager.state == 2)
-				targetManager.NextTarget();
-		}
+                targetManager.NextTarget();
+        }
     }
 
     public IEnumerator TargetUp()
@@ -80,6 +83,6 @@ public class Target : MonoBehaviour
     {
         yield return new WaitForSeconds(resetTime);
         if (!trainingMode)
-			StartCoroutine(TargetUp());	
+            StartCoroutine(TargetUp());
     }
 }
