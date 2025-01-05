@@ -195,7 +195,7 @@ public class TargetManager : MonoBehaviour
                 if (fourthKillObject != null)
                     thirdKillObject.SetActive(true);
                 Invoke("SHowWIn", 1.5f);
-                Invoke("SHowVictorty", 3f);
+                Invoke("SHowVictorty", 2.5f);
                 break;
         }
     }
