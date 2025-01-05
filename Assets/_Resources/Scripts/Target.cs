@@ -35,6 +35,7 @@ public class Target : MonoBehaviour
                 scoreManager.AddScore(score);
                 if (targetManager.state == 2)
                     targetManager.SetScore(score, head);
+                targetManager.ShowKillFeed(head);
 
                 // Add this line to destroy the target
                 Destroy(gameObject, 1f); // Destroys after 1 second to allow animation

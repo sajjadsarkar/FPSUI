@@ -8,7 +8,8 @@ public class TargetManager : MonoBehaviour
     public Target[] allTargets;
     public float hitpoints = 100f;
 
-    private float timer = 0.0f;
+    public GameObject[] killFeedObjects = new GameObject[5]; // Array of UI text objects
+    private int currentKillFeedIndex = 0; private float timer = 0.0f;
     public float duration = 30.0f;
     private int trainingScore = 0;
     private int kills = 0;
@@ -129,4 +130,39 @@ public class TargetManager : MonoBehaviour
             CanvasManager.instance.timerUI.SetActive(true);
         }
     }
+    public void ShowKillFeed(bool isHeadshot)
+    {
+        // Activate image at current index
+        if (killFeedObjects[currentKillFeedIndex] != null)
+        {
+            killFeedObjects[currentKillFeedIndex].SetActive(true);
+
+            // Move to next index, wrap around if needed
+            currentKillFeedIndex = (currentKillFeedIndex + 1) % killFeedObjects.Length;
+
+            StartCoroutine(FadeKillFeed(killFeedObjects[currentKillFeedIndex]));
+        }
+    }
+
+    private IEnumerator FadeKillFeed(GameObject feedObject)
+    {
+        yield return new WaitForSeconds(3f);
+
+        Image img = feedObject.GetComponent<Image>();
+        float elapsed = 0f;
+        float duration = 1f;
+        Color startColor = img.color;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            Color newColor = startColor;
+            newColor.a = Mathf.Lerp(1f, 0f, elapsed / duration);
+            img.color = newColor;
+            yield return null;
+        }
+
+        feedObject.SetActive(false);
+    }
+
 }
