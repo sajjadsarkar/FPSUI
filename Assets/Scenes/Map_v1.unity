@@ -39278,7 +39278,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 563421527}
         m_TargetAssemblyTypeName: GameUIManager, Assembly-CSharp
-        m_MethodName: OnCrouchButtonPressed
+        m_MethodName: OnPickupButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
