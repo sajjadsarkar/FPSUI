@@ -96,6 +96,12 @@ public class TargetManager : MonoBehaviour
         trainingScore += s;
         kills++;
         if (hs) headshots++;
+
+        // Add debug logging after 4 kills
+        if (kills == 4)
+        {
+            Debug.Log($"4 Kills reached! Current stats: Score={trainingScore}, Headshots={headshots}");
+        }
     }
 
     IEnumerator TrainingEnds()
@@ -132,37 +138,49 @@ public class TargetManager : MonoBehaviour
     }
     public void ShowKillFeed(bool isHeadshot)
     {
-        // Activate image at current index
-        if (killFeedObjects[currentKillFeedIndex] != null)
+        // Get the current kill feed object
+        GameObject currentFeed = killFeedObjects[currentKillFeedIndex];
+
+        if (currentFeed != null)
         {
-            killFeedObjects[currentKillFeedIndex].SetActive(true);
+            // Reset alpha and enable
+            Image img = currentFeed.GetComponent<Image>();
+            Color color = img.color;
+            color.a = 1f;
+            img.color = color;
+            currentFeed.SetActive(true);
 
-            // Move to next index, wrap around if needed
+            // Start fade for THIS kill feed
+            StartCoroutine(FadeKillFeed(currentFeed));
+
+            // Update index for next kill feed
             currentKillFeedIndex = (currentKillFeedIndex + 1) % killFeedObjects.Length;
-
-            StartCoroutine(FadeKillFeed(killFeedObjects[currentKillFeedIndex]));
         }
     }
 
     private IEnumerator FadeKillFeed(GameObject feedObject)
     {
+        // Wait before starting fade
         yield return new WaitForSeconds(3f);
 
         Image img = feedObject.GetComponent<Image>();
-        float elapsed = 0f;
-        float duration = 1f;
-        Color startColor = img.color;
-
-        while (elapsed < duration)
+        if (img != null)
         {
-            elapsed += Time.deltaTime;
-            Color newColor = startColor;
-            newColor.a = Mathf.Lerp(1f, 0f, elapsed / duration);
-            img.color = newColor;
-            yield return null;
+            float elapsed = 0f;
+            float duration = 1f;
+            Color startColor = img.color;
+
+            // Gradually fade out
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+                img.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+                yield return null;
+            }
         }
 
+        // Ensure object is disabled after fade
         feedObject.SetActive(false);
     }
-
 }
