@@ -43945,6 +43945,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1963653636}
   - component: {fileID: 1963653637}
+  - component: {fileID: 1963653638}
   m_Layer: 5
   m_Name: Victory
   m_TagString: Untagged
@@ -43991,11 +43992,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9aafbc276acec042b038a5dcf01b970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayTime: 1
+  delayTime: 0.3
   targetObject: {fileID: 1237077483}
   slideDistance: 500
-  slideDuration: 1
-  easeType: 27
+  slideDuration: 0.3
+  easeType: 1
+--- !u!114 &1963653638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963653635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab24d03ab6f246c4aadd009d465e88cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 140497607}
+  fadeInDuration: 0.5
+  startDelay: 0.3
 --- !u!1001 &1965538943
 PrefabInstance:
   m_ObjectHideFlags: 0
