@@ -200,7 +200,8 @@ public class WeaponScriptNEW : MonoBehaviour
             }
         }
 
-        if (Input.GetButton("Fire2") && !reloading && selected)
+        bool work = false;
+        if (work == true && !reloading && selected)
         {
             if (!aiming)
             {
