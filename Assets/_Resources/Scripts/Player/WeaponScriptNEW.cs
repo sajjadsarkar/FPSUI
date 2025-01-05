@@ -161,38 +161,38 @@ public class WeaponScriptNEW : MonoBehaviour
     {
         if (selected)
         {
-            if (Input.GetButtonDown("Fire"))
-            {
-                if (currentMode == fireMode.semi)
-                {
-                    FireSemi();
-                }
-                else if (currentMode == fireMode.launcher)
-                {
-                    FireLauncher();
-                }
-                else if (currentMode == fireMode.burst)
-                {
-                    StartCoroutine(FireBurst());
-                }
-                else if (currentMode == fireMode.shotgun)
-                {
-                    FireShotgun();
-                }
+            // if (Input.GetButtonDown("Fire"))
+            // {
+            //     if (currentMode == fireMode.semi)
+            //     {
+            //         FireSemi();
+            //     }
+            //     else if (currentMode == fireMode.launcher)
+            //     {
+            //         FireLauncher();
+            //     }
+            //     else if (currentMode == fireMode.burst)
+            //     {
+            //         StartCoroutine(FireBurst());
+            //     }
+            //     else if (currentMode == fireMode.shotgun)
+            //     {
+            //         FireShotgun();
+            //     }
 
-                if (bulletsLeft > 0)
-                    isFiring = true;
-            }
+            //     if (bulletsLeft > 0)
+            //         isFiring = true;
+            // }
 
-            if (Input.GetButton("Fire"))
-            {
-                if (currentMode == fireMode.auto)
-                {
-                    FireSemi();
-                    if (bulletsLeft > 0)
-                        isFiring = true;
-                }
-            }
+            // if (Input.GetButton("Fire"))
+            // {
+            //     if (currentMode == fireMode.auto)
+            //     {
+            //         FireSemi();
+            //         if (bulletsLeft > 0)
+            //             isFiring = true;
+            //     }
+            // }
 
             if (Input.GetButtonDown("Reload"))
             {
