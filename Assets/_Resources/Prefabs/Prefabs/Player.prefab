@@ -624,7 +624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   axes: 2
   sensitivityX: 0
-  sensitivityY: 1.6
+  sensitivityY: 1
   minimumX: 0
   maximumX: 0
   minimumY: -80
@@ -5297,6 +5297,7 @@ MonoBehaviour:
   maxInaccuracyHIP: 5
   maxInaccuracyAIM: 1
   aimPosition: {x: -0.111, y: 0.017, z: -0.32}
+  aiming: 0
   aimSpeed: 0.2
   zoomSpeed: 0.1
   FOV: 12
@@ -9908,6 +9909,7 @@ MonoBehaviour:
   maxInaccuracyHIP: 0.2
   maxInaccuracyAIM: 0
   aimPosition: {x: -0.124, y: 0.026, z: -0.09670216}
+  aiming: 0
   aimSpeed: 0.25
   zoomSpeed: 0.5
   FOV: 40
@@ -12313,6 +12315,7 @@ MonoBehaviour:
   maxInaccuracyHIP: 5
   maxInaccuracyAIM: 1
   aimPosition: {x: -0.134, y: 0.009, z: -0.3}
+  aiming: 0
   aimSpeed: 0.2
   zoomSpeed: 0.5
   FOV: 40
@@ -14067,6 +14070,7 @@ MonoBehaviour:
   maxInaccuracyHIP: 12
   maxInaccuracyAIM: 3
   aimPosition: {x: -0.09, y: 0.08, z: -0.05}
+  aiming: 0
   aimSpeed: 0.2
   zoomSpeed: 0.5
   FOV: 40
@@ -15767,6 +15771,7 @@ MonoBehaviour:
   maxInaccuracyHIP: 5
   maxInaccuracyAIM: 1
   aimPosition: {x: -0.134, y: 0.009, z: -0.3}
+  aiming: 0
   aimSpeed: 0.2
   zoomSpeed: 0.5
   FOV: 40
