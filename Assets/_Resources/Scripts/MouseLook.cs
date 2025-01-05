@@ -29,20 +29,36 @@ public class MouseLook : MonoBehaviour
 	{
 		float inputX = 0;
 		float inputY = 0;
+
 #if UNITY_ANDROID || UNITY_IOS
-		// Use the entire screen for look/rotation
-		if (Input.touchCount > 0)
+		// Check for second touch for rotation
+		if (Input.touchCount > 1)
+		{
+			Touch touch = Input.GetTouch(1); // Use second finger for look/rotation
+
+			if (touch.phase == TouchPhase.Moved)
+			{
+				// Only rotate if not over UI elements
+				if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+				{
+					inputX = touch.deltaPosition.x * sensitivityX * 0.1f;
+					inputY = touch.deltaPosition.y * sensitivityY * 0.1f;
+				}
+			}
+		}
+		// Fallback to first touch if only one finger is used
+		else if (Input.touchCount == 1)
 		{
 			Touch touch = Input.GetTouch(0);
 
-			// Enhanced UI check - using IsPointerOverGameObject
-			bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId) ||
-						   UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
-
-			if (!isOverUI)
+			// Check right side of screen for rotation
+			if (touch.position.x > Screen.width * 0.5f)
 			{
-				inputX = touch.deltaPosition.x * sensitivityX * 0.1f;
-				inputY = touch.deltaPosition.y * sensitivityY * 0.1f;
+				if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+				{
+					inputX = touch.deltaPosition.x * sensitivityX * 0.1f;
+					inputY = touch.deltaPosition.y * sensitivityY * 0.1f;
+				}
 			}
 		}
 #endif
