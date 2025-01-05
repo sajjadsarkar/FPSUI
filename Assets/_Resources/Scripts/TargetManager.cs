@@ -7,7 +7,7 @@ public class TargetManager : MonoBehaviour
 {
     public Target[] allTargets;
     public float hitpoints = 100f;
-
+    public GameObject VIctoryUI;
     public GameObject[] killFeedObjects = new GameObject[5]; // Array of UI text objects
     private int currentKillFeedIndex = 0; private float timer = 0.0f;
     public float duration = 30.0f;
@@ -96,12 +96,6 @@ public class TargetManager : MonoBehaviour
         trainingScore += s;
         kills++;
         if (hs) headshots++;
-
-        // Add debug logging after 4 kills
-        if (kills == 4)
-        {
-            Debug.Log($"4 Kills reached! Current stats: Score={trainingScore}, Headshots={headshots}");
-        }
     }
 
     IEnumerator TrainingEnds()

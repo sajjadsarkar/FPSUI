@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameUIManager : MonoBehaviour
 {
     public static GameUIManager instance;
@@ -113,4 +113,9 @@ public class GameUIManager : MonoBehaviour
         }
     }
 
+
+    public void OnMenuButtonPressed()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 }

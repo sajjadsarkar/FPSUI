@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
+		Application.targetFrameRate = Screen.currentResolution.refreshRate;
 		SpawnPlayer();
 		blur = FindObjectsOfType<BlurOptimized>();
 		resolutions = Screen.resolutions;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-
+using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject panel1;
@@ -211,5 +211,10 @@ public class MenuManager : MonoBehaviour
                 ShowPanel1();
                 break;
         }
+    }
+
+    public void Play()
+    {
+        SceneManager.LoadScene("Game");
     }
 }
