@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class TargetManager : MonoBehaviour
 {
@@ -132,6 +133,8 @@ public class TargetManager : MonoBehaviour
     }
     public void ShowKillFeed(bool isHeadshot)
     {
+        kills++;
+
         // Get the current kill feed object
         GameObject currentFeed = killFeedObjects[currentKillFeedIndex];
 
@@ -176,5 +179,9 @@ public class TargetManager : MonoBehaviour
 
         // Ensure object is disabled after fade
         feedObject.SetActive(false);
+        if (kills == 4)
+        {
+            VIctoryUI.SetActive(true);
+        }
     }
 }
