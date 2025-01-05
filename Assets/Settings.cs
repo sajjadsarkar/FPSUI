@@ -17,6 +17,7 @@ public class Settings : MonoBehaviour
 
     [SerializeField] private Sprite selectedSprite;
     [SerializeField] private Sprite unselectedSprite;
+    [SerializeField] private GameObject quinaryPanel;
 
     private int currentSelectedIndex = -1;
     private int currentSecondarySelectedIndex = -1;
@@ -123,11 +124,24 @@ public class Settings : MonoBehaviour
             Color imageColor = quinarySettingImages[currentQuinarySelectedIndex].color;
             imageColor.a = 0f;
             quinarySettingImages[currentQuinarySelectedIndex].color = imageColor;
+
+            // Hide panel if previously showing
+            if (currentQuinarySelectedIndex == 2 && quinaryPanel != null)
+            {
+                quinaryPanel.SetActive(false);
+            }
         }
+
         currentQuinarySelectedIndex = index;
         Color newImageColor = quinarySettingImages[currentQuinarySelectedIndex].color;
         newImageColor.a = 1f;
         quinarySettingImages[currentQuinarySelectedIndex].color = newImageColor;
         quinarySettingImages[currentQuinarySelectedIndex].sprite = selectedSprite;
+
+        // Show panel when third quinary button (index 2) is selected
+        if (index == 4 && quinaryPanel != null)
+        {
+            quinaryPanel.SetActive(true);
+        }
     }
 }
