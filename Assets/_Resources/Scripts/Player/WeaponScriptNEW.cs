@@ -743,7 +743,7 @@ public class WeaponScriptNEW : MonoBehaviour
         }
     }
 
-    IEnumerator Reload()
+    public IEnumerator Reload()
     {
         if (reloading) yield break;
 
@@ -851,4 +851,5 @@ public class WeaponScriptNEW : MonoBehaviour
             rocket.enabled = true;
         }
     }
+
 }

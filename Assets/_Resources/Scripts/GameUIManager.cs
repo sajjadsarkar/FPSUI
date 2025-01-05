@@ -45,6 +45,14 @@ public class GameUIManager : MonoBehaviour
         if (fpsController != null)
             fpsController.ToggleProne();
     }
+    public void OnReloadButtonPressed()
+    {
+        WeaponScriptNEW weapon = FindObjectOfType<WeaponScriptNEW>();
+        if (weapon != null && weapon.selected)
+        {
+            StartCoroutine(weapon.Reload());
+        }
+    }
     public void OnPickupButtonPressed()
     {
         WeaponManager weaponManager = FindObjectOfType<WeaponManager>();
