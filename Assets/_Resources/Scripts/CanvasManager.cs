@@ -30,9 +30,6 @@ public class CanvasManager : MonoBehaviour
 	public GameObject levelUI;
 	public Text levelText;
 
-	[Header("Score")]
-	public GameObject scoreUI;
-	public Text scoreText;
 
 	[Header("Timer")]
 	public GameObject timerUI;
