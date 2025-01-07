@@ -54,6 +54,11 @@ public class delay : MonoBehaviour
 
     private void OnDestroy()
     {
-        DOTween.Kill(targetObject.transform);
+        if (targetObject != null)
+        {
+            DOTween.Kill(targetObject.transform);
+        }
+
+
     }
 }
