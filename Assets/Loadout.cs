@@ -5,14 +5,17 @@ public class Loadout : MonoBehaviour
 {
     [SerializeField] private Image[] loadoutImages;
     [SerializeField] private Button[] loadoutButtons;
+    [SerializeField] private Image[] secondaryImages;
+    [SerializeField] private Image[] tertiaryImages;  // Third set of images
     [SerializeField] private Sprite selectedSprite;
     [SerializeField] private Sprite unselectedSprite;
+    [SerializeField] private Sprite[] secondarySprites;
+    [SerializeField] private Sprite[] tertiarySprites;  // Third set of sprites
 
     private int currentSelectedIndex = -1;
 
     void Start()
     {
-        // Setup buttons and initial visual states
         for (int i = 0; i < loadoutImages.Length; i++)
         {
             Color imageColor = loadoutImages[i].color;
@@ -22,26 +25,43 @@ public class Loadout : MonoBehaviour
             loadoutButtons[i].onClick.AddListener(() => SelectLoadout(index));
         }
 
-        // Select first loadout by default
         SelectLoadout(0);
     }
 
     public void SelectLoadout(int index)
     {
-        // Reset previous selection
         if (currentSelectedIndex >= 0)
         {
             Color imageColor = loadoutImages[currentSelectedIndex].color;
             imageColor.a = 0f;
             loadoutImages[currentSelectedIndex].color = imageColor;
             loadoutImages[currentSelectedIndex].sprite = unselectedSprite;
+
+            if (secondaryImages != null && secondaryImages.Length > currentSelectedIndex)
+            {
+                secondaryImages[currentSelectedIndex].sprite = null;
+            }
+
+            if (tertiaryImages != null && tertiaryImages.Length > currentSelectedIndex)
+            {
+                tertiaryImages[currentSelectedIndex].sprite = null;
+            }
         }
 
-        // Apply new selection
         currentSelectedIndex = index;
         Color newImageColor = loadoutImages[currentSelectedIndex].color;
         newImageColor.a = 1f;
         loadoutImages[currentSelectedIndex].color = newImageColor;
         loadoutImages[currentSelectedIndex].sprite = selectedSprite;
+
+        if (secondaryImages != null && secondaryImages.Length > index && secondarySprites.Length > index)
+        {
+            secondaryImages[index].sprite = secondarySprites[index];
+        }
+
+        if (tertiaryImages != null && tertiaryImages.Length > index && tertiarySprites.Length > index)
+        {
+            tertiaryImages[index].sprite = tertiarySprites[index];
+        }
     }
 }
