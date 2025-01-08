@@ -8475,6 +8475,7 @@ GameObject:
   - component: {fileID: 233413976}
   - component: {fileID: 233413978}
   - component: {fileID: 233413977}
+  - component: {fileID: 233413979}
   m_Layer: 5
   m_Name: DarkPanel
   m_TagString: Untagged
@@ -8539,6 +8540,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233413975}
   m_CullTransparentMesh: 1
+--- !u!114 &233413979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233413975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDelay: 0
+  glitchMaterial: {fileID: 0}
 --- !u!1 &234554987
 GameObject:
   m_ObjectHideFlags: 0
@@ -29856,7 +29871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &864832383
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29956,7 +29971,14 @@ MonoBehaviour:
   selectedSprite: {fileID: 21300000, guid: 6769f589e991ee743accb956d6fbef8c, type: 3}
   unselectedSprite: {fileID: 21300000, guid: ebfd7cb77b553a44499d8f2be3e9eeed, type: 3}
   quinaryPanel: {fileID: 311483698}
-  settingGameObjects: []
+  settingObjects:
+  - {fileID: 1515152249}
+  - {fileID: 558001381}
+  - {fileID: 510368224}
+  - {fileID: 1401305342}
+  - {fileID: 311483698}
+  - {fileID: 75574006}
+  - {fileID: 345384899}
 --- !u!1 &869008466
 GameObject:
   m_ObjectHideFlags: 0
@@ -30716,6 +30738,7 @@ GameObject:
   - component: {fileID: 897191952}
   - component: {fileID: 897191954}
   - component: {fileID: 897191953}
+  - component: {fileID: 897191955}
   m_Layer: 5
   m_Name: DarkPanel
   m_TagString: Untagged
@@ -30780,6 +30803,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897191951}
   m_CullTransparentMesh: 1
+--- !u!114 &897191955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897191951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDelay: 0
+  glitchMaterial: {fileID: 0}
 --- !u!1 &900796255
 GameObject:
   m_ObjectHideFlags: 0
@@ -33003,6 +33040,7 @@ GameObject:
   - component: {fileID: 972493153}
   - component: {fileID: 972493155}
   - component: {fileID: 972493154}
+  - component: {fileID: 972493156}
   m_Layer: 5
   m_Name: DarkPanel
   m_TagString: Untagged
@@ -33067,6 +33105,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 972493152}
   m_CullTransparentMesh: 1
+--- !u!114 &972493156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972493152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDelay: 0
+  glitchMaterial: {fileID: 0}
 --- !u!1 &974247476
 GameObject:
   m_ObjectHideFlags: 0
@@ -56956,7 +57008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1515152250
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59582,6 +59634,7 @@ GameObject:
   - component: {fileID: 1608934594}
   - component: {fileID: 1608934596}
   - component: {fileID: 1608934595}
+  - component: {fileID: 1608934597}
   m_Layer: 5
   m_Name: DarkPanel
   m_TagString: Untagged
@@ -59646,6 +59699,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608934593}
   m_CullTransparentMesh: 1
+--- !u!114 &1608934597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608934593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDelay: 0
+  glitchMaterial: {fileID: 0}
 --- !u!1 &1621429892
 GameObject:
   m_ObjectHideFlags: 0
@@ -69727,6 +69794,7 @@ GameObject:
   - component: {fileID: 1894528618}
   - component: {fileID: 1894528620}
   - component: {fileID: 1894528619}
+  - component: {fileID: 1894528621}
   m_Layer: 5
   m_Name: DarkPanel
   m_TagString: Untagged
@@ -69791,6 +69859,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894528617}
   m_CullTransparentMesh: 1
+--- !u!114 &1894528621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894528617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDelay: 0
+  glitchMaterial: {fileID: 0}
 --- !u!1 &1895424668
 GameObject:
   m_ObjectHideFlags: 0
@@ -72370,6 +72452,7 @@ GameObject:
   - component: {fileID: 1972555418}
   - component: {fileID: 1972555420}
   - component: {fileID: 1972555419}
+  - component: {fileID: 1972555421}
   m_Layer: 5
   m_Name: DarkPanel
   m_TagString: Untagged
@@ -72434,6 +72517,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972555417}
   m_CullTransparentMesh: 1
+--- !u!114 &1972555421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972555417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccff1a1b5416ba40acf30a9092a5df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDelay: 0
+  glitchMaterial: {fileID: 0}
 --- !u!1 &1973092440
 GameObject:
   m_ObjectHideFlags: 0
@@ -75104,7 +75201,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2064750918
 RectTransform:
   m_ObjectHideFlags: 0

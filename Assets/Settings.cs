@@ -24,7 +24,7 @@ public class Settings : MonoBehaviour
     private int currentTertiarySelectedIndex = -1;
     private int currentQuaternarySelectedIndex = -1;
     private int currentQuinarySelectedIndex = -1;
-
+    [SerializeField] private GameObject[] settingObjects;
     void Start()
     {
         // Initialize primary settings
@@ -125,7 +125,12 @@ public class Settings : MonoBehaviour
             imageColor.a = 0f;
             quinarySettingImages[currentQuinarySelectedIndex].color = imageColor;
 
-            // Hide panel if previously showing
+            // Disable previous object
+            if (settingObjects != null && settingObjects.Length > currentQuinarySelectedIndex)
+            {
+                settingObjects[currentQuinarySelectedIndex].SetActive(false);
+            }
+
             if (currentQuinarySelectedIndex == 2 && quinaryPanel != null)
             {
                 quinaryPanel.SetActive(false);
@@ -138,7 +143,12 @@ public class Settings : MonoBehaviour
         quinarySettingImages[currentQuinarySelectedIndex].color = newImageColor;
         quinarySettingImages[currentQuinarySelectedIndex].sprite = selectedSprite;
 
-        // Show panel when third quinary button (index 2) is selected
+        // Enable new object
+        if (settingObjects != null && settingObjects.Length > index)
+        {
+            settingObjects[index].SetActive(true);
+        }
+
         if (index == 4 && quinaryPanel != null)
         {
             quinaryPanel.SetActive(true);
