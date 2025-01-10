@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class TargetManager : MonoBehaviour
 {
+    public AudioSource victorySound;
     public Target[] allTargets;
     public float hitpoints = 100f;
     public GameObject VIctoryUI;
@@ -202,9 +203,11 @@ public class TargetManager : MonoBehaviour
     public void SHowWIn()
     {
         fourthKillObject.SetActive(true);
+        victorySound.Play();
     }
     public void SHowVictorty()
     {
+
         fourthKillObject.SetActive(false);
         VIctoryUI.SetActive(true);
         RectTransform rect = VIctoryUI.GetComponent<RectTransform>();
