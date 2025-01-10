@@ -22,13 +22,7 @@ public class CanvasManager : MonoBehaviour
 	public TextMeshProUGUI ammoText;
 	public TextMeshProUGUI magText;
 
-	[Header("Rockets")]
-	public GameObject rocketsUI;
-	public Text rocketsText;
 
-	[Header("Level")]
-	public GameObject levelUI;
-	public Text levelText;
 
 
 	[Header("Timer")]
@@ -140,7 +134,6 @@ public class CanvasManager : MonoBehaviour
 	{
 		ammoText.text = ammo.ToString();
 		magText.text = mags.ToString();
-		rocketsText.text = projectiles.ToString();
 	}
 
 	public void UpdateBullets(int ammo)
@@ -155,12 +148,10 @@ public class CanvasManager : MonoBehaviour
 
 	public void UpdateProjectileUI(int projectiles)
 	{
-		rocketsText.text = projectiles.ToString();
 	}
 
 	public void ShowProjectilesUI(bool show)
 	{
-		rocketsUI.SetActive(show);
 	}
 
 	public void Fade(int fadeOption)

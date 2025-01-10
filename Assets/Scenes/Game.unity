@@ -18996,7 +18996,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &828767204
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20384,8 +20384,6 @@ MonoBehaviour:
   magText: {fileID: 389843813}
   rocketsUI: {fileID: 568235606}
   rocketsText: {fileID: 1831057857}
-  levelUI: {fileID: 1935750802}
-  levelText: {fileID: 1138254451}
   timerUI: {fileID: 1029359917}
   timerText: {fileID: 2063442934}
   resultUI: {fileID: 638520930}

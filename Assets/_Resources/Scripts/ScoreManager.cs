@@ -55,7 +55,6 @@ public class ScoreManager : MonoBehaviour
         {
             lvl++;
 
-            if (lvl > 0) CanvasManager.instance.levelUI.SetActive(true);
             aSource.PlayOneShot(levelUpSound, 0.2f);
             pointsToNextRank += (lvl * 100);
         }
